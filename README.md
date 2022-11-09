@@ -42,7 +42,7 @@ The project second objective is building a website with a GUI that allows to:
 
 ## Contributors
 
-Name | Email | GitHub | Contributing
---- | --- | --- | --- 
-Davide De Zuane | <davide@girori.net> |  [DavideDeZuane](https://github.com/DavideDeZuane) | <p align="center">1/2<p align="center">
-Rahmi El Mechri | <rahmmi.elmechri@gmail.com>|  [OT-Rax](https://github.com/OT-Rax) | <p align="center">1/2<p align="center">
+Name | Email | GitHub 
+--- | --- | --- 
+Davide De Zuane | <davide@girori.net> |  [DavideDeZuane](https://github.com/DavideDeZuane)
+Rahmi El Mechri | <rahmmi.elmechri@gmail.com>|  [OT-Rax](https://github.com/OT-Rax) 
