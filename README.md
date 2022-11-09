@@ -1,4 +1,5 @@
 # Graphlog
+##
 Academic project for AI course.
 
 The project objective is building a prolog Knowledge Base capable of analyzing graphs, and than answer to the following queries:
@@ -24,3 +25,24 @@ The project second objective is building a website with a GUI that allows to:
  - [ ] Build graphs
  - [ ] Highlight nodes
  - [ ] Answer previously described queries
+
+
+## Technologies
+
+- Prolog (Obviously)
+- Node.js (JavaScript RE)
+- Tau Prolog (JavaScript Prolog Interpreter)
+- NestJS (Javascript web framework)
+- React JS (Javascript UI library)
+- React-graph-vis (React component for graph manipulation)
+- vis.js (Javascript visualization library behind react-graph-vis)
+- Axios (HTTP client for communication between Browser and Server)
+
+![Graphlog Scheme](/docs/images/scheme.jpg "Graphlog Scheme")
+
+## Contributors
+
+Name | Email | GitHub | Contributing
+--- | --- | --- | --- |--- 
+Davide De Zuane | <davide@girori.net> |  [DavideDeZuane](https://github.com/DavideDeZuane) | <p align="center">1/2<p align="center">
+Rahmi El Mechri | <rahmmi.elmechri@gmail.com>|  [OT-Rax](https://github.com/OT-Rax) | <p align="center">1/2<p align="center">
