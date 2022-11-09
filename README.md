@@ -1,5 +1,5 @@
 # Graphlog
-##
+## Overview
 Academic project for AI course.
 
 The project objective is building a prolog Knowledge Base capable of analyzing graphs, and than answer to the following queries:
@@ -43,6 +43,6 @@ The project second objective is building a website with a GUI that allows to:
 ## Contributors
 
 Name | Email | GitHub | Contributing
---- | --- | --- | --- |--- 
+--- | --- | --- | --- 
 Davide De Zuane | <davide@girori.net> |  [DavideDeZuane](https://github.com/DavideDeZuane) | <p align="center">1/2<p align="center">
 Rahmi El Mechri | <rahmmi.elmechri@gmail.com>|  [OT-Rax](https://github.com/OT-Rax) | <p align="center">1/2<p align="center">
