@@ -1,51 +1,70 @@
-# Graphlog
+# Getting Started with Create React App
 
-Website for prolog graph analysis.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Overview
-Academic project for AI course.
+## Available Scripts
 
-The project objective is building a prolog Knowledge Base capable of analyzing graphs, and than answer to the following queries:
+In the project directory, you can run:
 
-- [ ] Is the graph Eleurian?
-- [ ] Is the graph Hamiltonian?
-- [ ] Is the graph a tree?
-- [ ] Which node is the tree root? 
-- [ ] Which nodes are the tree leaves?
-- [ ] What are graph's paths?
-- [ ] What are graph's walks?
-- [ ] What are graph's cicles?
-- [ ] Is the graph a tree?
-- [ ] Is the graph bipartite?
-- [ ] Shortest path given 2 nodes?
-- [ ] Longest path given 2 nodes?
-- [ ] What is graph's chromatic number?
-- [ ] What is the node with higher grade?
-- [ ] Whats is a node's star?
+### `npm start`
 
-The project second objective is building a website with a GUI that allows to:
- 
-- [ ] Build graphs
-- [ ] Highlight nodes
-- [ ] Answer previously described queries
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Technologies
+### `npm test`
 
-- Prolog (Obviously)
-- Node.js (JavaScript RE)
-- Tau Prolog (JavaScript Prolog Interpreter)
-- NestJS (Javascript web framework)
-- React JS (Javascript UI library)
-- React-graph-vis (React component for graph manipulation)
-- vis.js (Javascript visualization library behind react-graph-vis)
-- Axios (HTTP client for communication between Browser and Server)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-![Graphlog Scheme](/docs/images/scheme.jpg "Graphlog Scheme")
+### `npm run build`
 
-## Contributors
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Name | Email | GitHub 
---- | --- | --- 
-Davide De Zuane | <davide@girori.net> |  [DavideDeZuane](https://github.com/DavideDeZuane)
-Rahmi El Mechri | <rahmmi.elmechri@gmail.com>|  [OT-Rax](https://github.com/OT-Rax) 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
