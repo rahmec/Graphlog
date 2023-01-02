@@ -1,6 +1,6 @@
-![](/assets/img/logo.png)
-
-# Graphlog
+<p align="center">
+  <img src="assets/img/logo.png" sytle="width:300px;height:auto">
+</p>
 
 L'obiettivo di questo progetto universitario è quello di realizzare un agente intelligente. Sono un livello sopra i normali programmi del computer in quanto ci si aspetta siano in grado di percepire l'ambiente, adattarsi al cambiamento ed operare autonomamente.
 
