@@ -1,3 +1,31 @@
+# Graphlog
+
+L'obiettivo di questo progetto universitario è quello di realizzare un agente intelligente. Sono un livello sopra i normali programmi del computer in quanto ci si aspetta siano in grado di percepire l'ambiente, adattarsi al cambiamento ed operare autonomamente.
+
+## Ambiente di Lavoro
+Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente. Queste sono informazioni utili per la progettazione e l'implementazione .
+### Enviroment
+| **Agent Type**  | **Performance Measure** |  **Enviroment** | **Actuators+*  |  **Sensors** |
+|---|---|---|---|---|
+|  Graph Analysis |   |  Different type of graphs |   |   |
+
+### Properties
+| **Task Enviroment**  | **Observable** |  **Agents** | **Deterministics+*  |  **Episodic** | **Static** |  **Discrete** |
+|---|---|---|---|---|---|---|
+|  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discerte |
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
