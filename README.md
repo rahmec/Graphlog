@@ -1,3 +1,5 @@
+![](/assets/img/logo.png)
+
 # Graphlog
 
 L'obiettivo di questo progetto universitario è quello di realizzare un agente intelligente. Sono un livello sopra i normali programmi del computer in quanto ci si aspetta siano in grado di percepire l'ambiente, adattarsi al cambiamento ed operare autonomamente.
@@ -10,15 +12,15 @@ Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agen
 |  Graph Analysis |   |  Different type of graphs |   |   |
 
 ### Properties
-| **Task Enviroment**  | **Observable** |  **Agents** | **Deterministics+*  |  **Episodic** | **Static** |  **Discrete** |
+| **Task Enviroment**  | **Observable** |  **Agents** | **Deterministics**  |  **Episodic** | **Static** |  **Discrete** |
 |---|---|---|---|---|---|---|
 |  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discerte |
 
-
-
-
-
-
+## Caratterstiche
+L'agente che andremo a realizzare è del tipo *simple Reflex agent*. Le principali *condition-action rule* implementate sono:
+- [ ] Presenza di un percorso tra due nodi
+- [ ] Presenza di un cammino tra due nodi
+- [ ] Calcolo dei principari indicatori di un grafo
 
 
 
