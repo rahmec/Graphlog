@@ -1,7 +1,11 @@
 <p align="center" style="margin-bottom:5px;">
   <img src="assets/img/logo.png" sytle="width:300px;height:auto">
 </p>
-Progetto universitario per la realizzazione di un agente intelligente che consenta di eseguire analisi su grafi. Per la sua realizzazione abbiamo utilizzato le librerie: ReactJS, Vis.js e TauProlog. 
+Progetto universitario per la realizzazione di un agente intelligente che consenta di eseguire analisi su grafi. Per la sua realizzazione abbiamo utilizzato le librerie:
+
+- ![ReactJS](https://it.reactjs.org/)
+- ![VisJS](https://visjs.org/)
+- ![TauProlog](http://tau-prolog.org/)
 
 ## Ambiente di Lavoro
 Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente.
