@@ -15,5 +15,10 @@ body {
 }
 /* to center inline element */
 .text-center {
-       text-align:center
+    text-align:center
+}
+
+.title {
+    font-weight: 900;
+    font-size: 4rem;
 }

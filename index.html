@@ -12,7 +12,7 @@
 
 <body>
 	<div class="container-fluid mx-2">
-		<h1 align="center" class="m-3">Graphlog</h1>
+		<h1 align="center" class="m-3 title">Graphlog</h1>
 		<div class="row d-flex">
 			<div class="col-xl-6">
 				<h5 align="center">Graph Visualization</h5>
@@ -21,6 +21,7 @@
 			<div class="col-xl-6 pr-5">
 				<h5>Action</h5>
 				Specify nodes and edges in the json notation
+				<form action="./analyze.php" method="post">
 				<div class="row">
 					<!-- Action for nodes -->
 					<div class="col-6">
@@ -31,11 +32,8 @@
 								name="nodes" 
 								id="nodes" 
 								rows="10"
-								placeholder="[ &#10; { id: i, label: 'Node-i' } , &#10; { id: j, label: 'Node-j' } , &#10; ... , &#10; {id: k, label: 'Node-k' } &#10;]"
+								placeholder="[ &#10; { id: 1, label: 'Node 1' }, &#10; { id: 2, label: 'Node 2' }, &#10; { id: 3, label: 'Node 3' }, &#10; { id: 4, label: 'Node 4' }&#10;]"
 							></textarea>
-							<br>
-							<button class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Add node</button>
-							<button class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></i> Delete node</button>
 						</div>
 					</div>
 					<!-- Action for edges -->
@@ -47,19 +45,24 @@
 								name="edges" 
 								id="edges" 
 								rows="10"
-								placeholder="[ &#10; { from: i, to: j } , &#10; { from: j, to: k } , &#10; ... , &#10; { from: k, to: i } &#10;  ]"
+								placeholder="[ &#10; { from: 1, to: 3 }, &#10; { from: 1, to: 2 }, &#10; { from: 2, to: 4 }, &#10; { from: 2, to: 3 }, &#10;]"
 							></textarea>
-							<br>
-							<button class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Add edge</button>
-							<button class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></i> Delete edge</button>
 						</div>
 					</div>
+					<div class="center-block my-3">
+						<button 
+							class="btn btn-primary mx-2"
+							type="submit"
+						>
+							<i class="fa-solid fa-circle-check"></i> Done
+						</button>
+						<button class="btn btn-secondary"><i class="fa-solid fa-shuffle"></i></i> Random</button>
+					</div>
 				</div>
+				</form>
 			</div>
-			
 		</div>
 	</div>	
-
 <form>
 </form>
 <script type="text/javascript" src="js/function.js"></script>
