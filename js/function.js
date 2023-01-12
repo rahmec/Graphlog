@@ -23,17 +23,13 @@ var data = {
 };
 
 var container = document.getElementById('mynetwork');
-var options = {};
+var options = {
+	clickToUse: true,
+};
 var network = new vis.Network(container, data, options);
 
 // TO-DO:
 // [ ] funzione per creare un grafo casuale
-
-
-
-
-
-
 
 
 /*
@@ -42,21 +38,16 @@ Prolog
 ##################################
 */
 var session = window.pl.create();
-
-var pl_kb_nodes_string = "node(1). node(2). node(3). node(4). node(5)."
-var pl_kb_edges_string = "\
-    edge(1,3). edge(1,2). edge(2,4). edge(2,5).\
-    edge(X,Y) :- edge(Y, X).\
-"
-session.consult(pl_kb_nodes_string+pl_kb_edges_string, {
-    success: function () {
-	console.log("Went well");
-	session.query("node(X).", {
-	    success: function (goal) {
-		console.log("Query parsing went well");
-		session.answers({
-		    success: function (answers) {
-			console.log("answer");
+// load the knowledge base
+session.consult('prolog/default.pl', {
+    success: function () { 
+		console.log("Went well");
+		session.query("node(X).", {
+	    	success: function (goal) {
+			console.log("Query parsing went well");
+			session.answers({
+		    	success: function (answers) {
+				console.log("answer");
 		    },
 		    error: function (err){
 			console.log("Errore");
@@ -80,22 +71,24 @@ session.consult(pl_kb_nodes_string+pl_kb_edges_string, {
     },
 });
 
+// parse the JSON-String
 function parse_json(str){
-    try {
-	object = JSON.parse(str);
-	if(object['nodes'] != null && object['edges'] != null){
-	    cleanGraph();
-	    object['nodes'].forEach(addNode);
-	    object['edges'].forEach(addEdge);
-	}else{
-	    console.log("Object must contain nodes and edges arrays");
-	    window.alert("Object must contain nodes and edges arrays");
-	}
-    } catch (e) {
-	console.log(e);
-	window.alert("Loaded string is not a json.");
-	console.log("Loaded string is not a json.");
-	return false;
+    try{
+		object = JSON.parse(str);
+		if(object['nodes'] != null && object['edges'] != null){
+	    	cleanGraph();
+	    	object['nodes'].forEach(addNode);
+	    	object['edges'].forEach(addEdge);
+		} else {
+	    	console.log("Object must contain nodes and edges arrays");
+	    	window.alert("Object must contain nodes and edges arrays");
+		}
+    } 
+	catch(e){
+		console.log(e);
+		window.alert("Loaded string is not a json.");
+		console.log("Loaded string is not a json.");
+		return false;
     }
 }
 

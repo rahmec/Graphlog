@@ -6,6 +6,7 @@ body {
     width: 600px;
     height: 400px;
     border: 1px solid lightgray;
+    border-radius: 10px;
 }
 /* to center block element */
 .center-block {
@@ -21,4 +22,8 @@ body {
 .title {
     font-weight: 900;
     font-size: 4rem;
+}
+
+.hidden {
+    display: none;
 }
