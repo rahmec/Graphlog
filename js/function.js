@@ -1,7 +1,13 @@
+// TO-DO:
+// [ ] funzione per creare un grafo casuale
+// [X] funzione per aggiungere nodi e archi al KB
+// [ ] tenere conto del nome dei nodi tramite una relazione node_name(id, label)?
+// [ ] query per contare il numero di archi e il numero di nodi
+
 /*
-##################################
+################################################
 Default Graph
-##################################
+################################################
 */
 var nodes = new vis.DataSet([
     {id: 1, label: 'Node 1'},
@@ -28,14 +34,11 @@ var options = {
 };
 var network = new vis.Network(container, data, options);
 
-// TO-DO:
-// [ ] funzione per creare un grafo casuale
-
 
 /*
-##################################
+################################################
 Prolog
-##################################
+################################################
 */
 var session = window.pl.create();
 // load the knowledge base
@@ -71,7 +74,77 @@ session.consult('prolog/default.pl', {
     },
 });
 
-// parse the JSON-String
+/*
+################################################
+Parsing Function
+################################################
+*/
+
+function submit(txt_nodes, txt_edges){
+	
+	if(txt_nodes == '' || txt_edges == '' ){
+		console.log("Object must contain nodes and edges arrays");
+		window.alert("Object must contain nodes and edges arrays");
+		return false;
+	}
+	
+	cleanGraph();
+	parse_json_edges(txt_edges);
+	parse_json_nodes(txt_nodes);
+	//after parsing we load the KB
+	kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
+	session.consult(kb, {
+  		success: function () { console.log('Went well')},
+  		error: function (err) { console.log(err) },
+	});
+	session.query("node(X).", {
+		success: function (goal) {
+		    console.log("Query parsing went well");
+		    session.answers(puri);
+		},
+		error: function (err) {
+		    console.log("Query parsing went bad");
+		},
+	})
+	
+	document.getElementById('action').style.display = "none";
+	document.getElementById('query').style.display = "block";
+}
+
+function parse_json_edges(str){
+    try{
+		object = JSON.parse(str);
+		if(object.length == 0){
+			alert("Definire almeno un arco");
+			return false;
+		}
+		object.forEach((element) => { 
+			data.edges.add(element);
+			pl_kb_edges_string += "edge(%FROM%,%TO%). \n".replace("%FROM%", element.from).replace("%TO%", element.to);
+		})
+	} catch(e){
+		json_error(e);
+		return false;
+    }
+}
+
+function parse_json_nodes(str){
+	try{
+		object = JSON.parse(str);
+		if(object.length == 0){
+			alert("Definire almeno un nodo");
+			return false;
+		}
+		object.forEach((element) => {
+			data.nodes.add(element)
+			pl_kb_nodes_string += "node(%ID%). \n".replace("%ID%", element.id);
+		})
+	} catch (e){
+		json_error(e);
+		return false;
+	}
+}
+
 function parse_json(str){
     try{
 		object = JSON.parse(str);
@@ -83,14 +156,19 @@ function parse_json(str){
 	    	console.log("Object must contain nodes and edges arrays");
 	    	window.alert("Object must contain nodes and edges arrays");
 		}
-    } 
-	catch(e){
+    } catch(e){
 		console.log(e);
 		window.alert("Loaded string is not a json.");
 		console.log("Loaded string is not a json.");
 		return false;
     }
 }
+
+/*
+################################################
+Other
+################################################
+*/
 
 function puri(answer){
     console.log(session.format_answer(answer));
@@ -154,4 +232,14 @@ var json_obj = '{\
     ]\
 }'
 
-//parse_json(json_obj);
+
+/*
+################################################
+Utility
+################################################
+*/
+function json_error(error){
+	console.log(error);
+	window.alert("Loaded string is not a json.");
+	console.log("Loaded string is not a json.");
+}

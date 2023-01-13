@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<!-- Import Vis.js & Tau-Prolog -->
+	<!-- Import Vis.js & Tau-Prolog & Swal2 -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script type="text/javascript" src="js/tau-prolog.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -10,27 +10,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<script type="text/javascript">
-		//load analyzer
-		function submit(){
-			if(document.getElementById("nodes").value == '' || document.getElementById("edges").value == '' ){
-				Swal.fire({
-					title: 'Errore',
-					icon: 'error',
-					text: 'Inserire sia nodi che archi correttamente.'
-				})
-				return false;
-			}
-
-			document.getElementById('action').style.display = "none";
-			document.getElementById('query').style.display = "block";
-			var x = document.getElementById("nodes").value;
-			var y = document.getElementById("edges").value;
-			document.getElementById('prova').innerHTML = x;
-
-		}
-
-	</script>
+	<script type="text/javascript" src="function.js"></script>
 </head>
 
 <body>
@@ -74,7 +54,7 @@
 					<div class="center-block my-3">
 						<button 
 							class="btn btn-primary mx-2"
-							onclick="submit()"
+							onclick="submit(document.getElementById('nodes').value, document.getElementById('edges').value)"
 						>
 							<i class="fa-solid fa-circle-check"></i> Done
 						</button>
