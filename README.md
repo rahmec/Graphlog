@@ -1,17 +1,20 @@
 <p align="center" style="margin-bottom:5px;">
   <img src="assets/img/logo.png" sytle="width:300px;height:auto">
 </p>
-Progetto universitario per la realizzazione di un agente intelligente che consenta di eseguire analisi su grafi. Per la sua realizzazione abbiamo utilizzato le librerie:
 
-- ![ReactJS](https://it.reactjs.org/)
-- ![VisJS](https://visjs.org/)
-- ![TauProlog](http://tau-prolog.org/)
+<h1 align="center" style="font-weight:800; font-size:40px"> Graphlog</h1>
+
+Progetto universitario per la realizzazione di un agente che consenta di eseguire analisi su grafi. Si tratta di una single-page application scritta in `HTML` e `JS` per consentire la facilità di utilizzo del linguaggio dichiarativo `prolog`. Le principali tecnologie utilizzate sono:
+
+- <img src="https://visjs.org/images/visjs_logo.png" width="14"></img> [VisJS](https://visjs.org/): libreria js per la visualizzazione e manipolazione di grafi 
+- <img src="https://avatars.githubusercontent.com/u/57189039?s=200&v=4" width="14"></img> [TauProlog](http://tau-prolog.org/): interprete prolog per il js
 
 ## Ambiente di Lavoro
 Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente.
 | **Agent Type**  | **Performance Measure** |  **Enviroment** | **Actuators**  |  **Sensors** |
 |---|---|---|---|---|
-|  Graph Analysis |   |  Different type of graphs |   |   |
+|  Symple Reflex | None |  Different type of graphs | Web Inteface  | User Interface  |
+
 
 Le proprietà dell'ambiente sono necessarie per determinare il modello da applicare e per realizzare una buona progettazione.
 
@@ -19,13 +22,14 @@ Le proprietà dell'ambiente sono necessarie per determinare il modello da applic
 |---|---|---|---|---|---|---|
 |  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discerte |
 
-## Functionality
-L'agente che andremo a realizzare è del tipo *simple Reflex agent*. Le principali *condition-action rule* implementate sono:
+## Funzionamento
+L'applicativo dispone di un interafaccia grafica che consente all'utente di caricare il proprio grafo seguendo la notazione `json`. Una volta premuto il submit
+apparirà una schermata che presenterà all'utente la rappresentazione grafica del grafo da lui indicato e una serie di informazioni ed azioni da eseguire sul grafo.
+
+L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
 - [ ] Presenza di un percorso tra due nodi
 - [ ] Presenza di un cammino tra due nodi
 - [ ] Calcolo dei principari indicatori di un grafo
-
-
 
 ## Contributors
 <table>

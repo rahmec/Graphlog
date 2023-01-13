@@ -3,7 +3,8 @@
 // [X] funzione per aggiungere nodi e archi al KB
 // [ ] tenere conto del nome dei nodi tramite una relazione node_name(id, label)?
 // [ ] query per contare il numero di archi e il numero di nodi
-
+// [ ] scrivere il default kb dal file dentro js
+ 
 /*
 ################################################
 Default Graph
