@@ -27,9 +27,20 @@ L'applicativo dispone di un interafaccia grafica che consente all'utente di cari
 apparirà una schermata che presenterà all'utente la rappresentazione grafica del grafo da lui indicato e una serie di informazioni ed azioni da eseguire sul grafo.
 
 L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
+
 - [ ] Presenza di un percorso tra due nodi
 - [ ] Presenza di un cammino tra due nodi
 - [ ] Calcolo dei principari indicatori di un grafo
+- [ ] Determinare se il grafo è eureliano
+- [ ] Determinare se il grafo è un albero
+- [ ] Determminare quale nodo è la radice dell'albero
+- [ ] Determinare se il grafo è bipartito
+- [ ] Determinare il colore cromatico
+- [ ] Determinare la stella di un nodo
+- [ ] Determinare il grado di un nodo
+- [ ] Determinare il nodo con grado minimo/massimo
+- [ ] Determianre la distanza tra due nodi e il percorso minimo
+- [ ] Determinare cammini, passeggiate e cicli sul grafo
 
 ## Contributors
 <table>
