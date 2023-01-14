@@ -1,10 +1,10 @@
 // TO-DO:
-// [ ] funzione per creare un grafo casuale
-// [X] funzione per aggiungere nodi e archi al KB
-// [ ] tenere conto del nome dei nodi tramite una relazione node_name(id, label)?
+//1
 // [ ] query per contare il numero di archi e il numero di nodi
+// [ ] tenere conto del nome dei nodi tramite una relazione node_name(id, label)?
+//3
 // [ ] scrivere il default kb dal file dentro js
- 
+// [ ] funzione per creare un grafo casuale
 /*
 ################################################
 Default Graph
@@ -94,6 +94,7 @@ function submit(txt_nodes, txt_edges){
 	parse_json_nodes(txt_nodes);
 	//after parsing we load the KB
 	kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
+	console.log(kb);
 	session.consult(kb, {
   		success: function () { console.log('Went well')},
   		error: function (err) { console.log(err) },
