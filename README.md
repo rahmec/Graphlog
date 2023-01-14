@@ -33,6 +33,8 @@ apparirà una schermata che presenterà all'utente la rappresentazione grafica d
 ### Rules
 L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
 
+- [X] Determinare il numero di nodi
+- [X] Determinare il numero di archi
 - [ ] Presenza di un percorso tra due nodi
 - [ ] Presenza di un cammino tra due nodi
 - [ ] Calcolo dei principari indicatori di un grafo
