@@ -26,6 +26,9 @@ Le proprietà dell'ambiente sono necessarie per determinare il modello da applic
 L'applicativo dispone di un interafaccia grafica che consente all'utente di caricare il proprio grafo seguendo la notazione `json`. Una volta premuto il submit
 apparirà una schermata che presenterà all'utente la rappresentazione grafica del grafo da lui indicato e una serie di informazioni ed azioni da eseguire sul grafo.
 
+### Facts
+
+### Rules
 L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
 
 - [ ] Presenza di un percorso tra due nodi
