@@ -9,6 +9,8 @@ Progetto universitario per la realizzazione di un agente che consenta di eseguir
 - <img src="https://visjs.org/images/visjs_logo.png" width="14"></img> [VisJS](https://visjs.org/): libreria js per la visualizzazione e manipolazione di grafi 
 - <img src="https://avatars.githubusercontent.com/u/57189039?s=200&v=4" width="14"></img> [TauProlog](http://tau-prolog.org/): interprete prolog per il js
 
+L'obiettivo principale è quello di realizzare un applicativo che consenta di realizzare in maniera intuitiva e semplice analisi su grafi e di riportare i principali modelli di programmazione matematica in un linguaggio dichiarativo come prolog.
+
 ## Ambiente di Lavoro
 Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente.
 | **Agent Type**  | **Performance Measure** |  **Enviroment** | **Actuators**  |  **Sensors** |
