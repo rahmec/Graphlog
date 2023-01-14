@@ -38,7 +38,7 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
 - [ ] Calcolo dei principari indicatori di un grafo
 - [ ] Determinare se il grafo è eureliano
 - [ ] Determinare se il grafo è un albero
-- [ ] Determminare quale nodo è la radice dell'albero
+- [ ] Determminare quale nodo è la radice dell'albero
 - [ ] Determinare se il grafo è bipartito
 - [ ] Determinare il colore cromatico
 - [ ] Determinare la stella di un nodo
