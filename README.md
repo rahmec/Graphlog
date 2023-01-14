@@ -22,7 +22,7 @@ Le proprietà dell'ambiente sono necessarie per determinare il modello da applic
 
 | **Task Enviroment**  | **Observable** |  **Agents** | **Deterministics**  |  **Episodic** | **Static** |  **Discrete** |
 |---|---|---|---|---|---|---|
-|  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discerte |
+|  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discrete |
 
 ## Funzionamento
 L'applicativo dispone di un interafaccia grafica che consente all'utente di caricare il proprio grafo seguendo la notazione `json`. Una volta premuto il submit
