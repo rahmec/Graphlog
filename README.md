@@ -24,11 +24,25 @@ Le proprietà dell'ambiente sono necessarie per determinare il modello da applic
 |---|---|---|---|---|---|---|
 |  Graph Analysis |  Fully |  Single |  Deterministic | Episodic  | Semi| Discrete |
 
-## Funzionamento
+## Prolog
 L'applicativo dispone di un interafaccia grafica che consente all'utente di caricare il proprio grafo seguendo la notazione `json`. Una volta premuto il submit
 apparirà una schermata che presenterà all'utente la rappresentazione grafica del grafo da lui indicato e una serie di informazioni ed azioni da eseguire sul grafo.
 
 ### Facts
+I fatti, attraverso i quali descriviamo il grafo in prolog, sono i seguenti:
+- Per descrivere la presenza di un nodo `x` utilizziamo il predicato 
+   ```prolog
+     node(x).
+   ```
+- Per descrivere la presenza di un arco tra il nodo `x` e il nodo `y` utilizziamo il predicato
+  ```prolog
+    edge(x,y).
+  ```
+- Poichè consideriamo grafi simmetrici non teniamo conto dell'orientamentpo degli archi e definiamo le seguenti regole
+  ```prolog
+    edge_s(X,Y) :- edge(Y,X).
+    connected(X,Y) :- edge_s(X,Y); edge(X,Y).
+   ```
 
 ### Rules
 L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. 
@@ -88,11 +102,12 @@ La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lu
       check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), list_lenght(P, N), last(Z, P), connected(Z,X), append(P, [X], Y), !.
       check_hamiltonian_cycles(X, [H|T], P) :- check_hamiltonian_cycles(X, T, P). 
     ```
-- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno. Allora affinchè il grafo sia un albero deve soddisfare `conntected_graph` e inoltre che il numero di nodi e il numero di archi siano collegati dalla relazione descritta.
-Abbiamo deciso di mettere prima la condizione sui nodi ed archi perchè se quella non viene rispettata non siamo in presenza di un albero, la clausola `conntected_graph` sarebbe più dispendiosa da verificare.
+- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno. Allora affinchè il grafo sia un albero deve soddisfare `conntected_graph` e inoltre che il numero di nodi e il numero di archi rispettino la relazione descritta.
+Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesce a verificare più velocemente rispetto alla connesione del grafo.
     ```prolog
       tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
+## JavaScript
 
 
 
