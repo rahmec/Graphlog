@@ -45,17 +45,33 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
     list_edge(L) :- findall(X, edge(X,_), L).
     n_edges(N) :- list_edge(X), list_lenght(X,N). 
    ```
-- [ ] **Presenza di un percorso tra due nodi**:
-- [ ] Presenza di un cammino tra due nodi
+- [X] **Determinare la stella di un nodo e il suo grado**: la stella è l'insieme di archi adiacenti al nodo; il segeunte fatto ritorna una lista dei nodi che hanno una connessione diretta con quello indicato. Per determinare il grado riutilizziamo il predicato list lenght.
+  ```prolog
+    star(X,L) :- findall(Y, connected(X,Y), L).
+    degree(X, N) :- star(X,L), list_lenght(L,N). 
+  ```
+- [ ] Determinare il nodo con grado minimo/massimo
+
+- [X] **Percorso tra due nodi**: un percorso è una sequenza di nodi (o archi) adiacenti che non si ripetono, per determinare il percorso tra due nodi abbiamo bisogno di costruirlo in maniera incrementale. La regola `part_of_path\4` è una relazione tra i nodi di partenza e arrivo, i nodi visitati fino a quel momento e il path complessivo. Se X non è connesso direttamente a Y allora cerco uno Z che non è membro di quelli visitati che è in connesso a Y o a sua volta connesso a qualcuno che è connesso a Y.
+    ```prolog
+      path(X,Y,P) :- part_of_path(X,Y,[],L), reverse(P,L).  
+      part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
+      part_of_path(X,Y,V,P) :- connected(X,Z), not(member(Z,V)), Z =\= Y, part_of_path(Z,Y,[X|V],P).
+    ```
+
+- [X] **Determinare se il grafo è connesso:**:
+    ```prolog
+    ```
+- [X] **Determinare se il grafo è euleriano**:
+    ```prolog
+    ```
+
 - [ ] Calcolo dei principari indicatori di un grafo
-- [ ] Determinare se il grafo è eureliano
 - [ ] Determinare se il grafo è un albero
 - [ ] Determminare quale nodo è la radice dell'albero
 - [ ] Determinare se il grafo è bipartito
 - [ ] Determinare il colore cromatico
-- [ ] Determinare la stella di un nodo
-- [ ] Determinare il grado di un nodo
-- [ ] Determinare il nodo con grado minimo/massimo
+
 - [ ] Determianre la distanza tra due nodi e il percorso minimo
 - [ ] Determinare cammini, passeggiate e cicli sul grafo
 
