@@ -2,7 +2,7 @@
   <img src="assets/img/logo.png" sytle="width:300px;height:auto">
 </p>
 
-<h1 align="center" style="font-weight:800; font-size:40px"> Graphlog</h1>
+<h1 align="center" style="font-weight:800; font-size:80px"> GraphLog</h1>
 
 Progetto universitario per la realizzazione di un agente che consenta di eseguire analisi su grafi. Si tratta di una single-page application scritta in `HTML` e `JS` per consentire la facilità di utilizzo del linguaggio dichiarativo `prolog`. Le principali tecnologie utilizzate sono:
 
@@ -58,22 +58,31 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
       part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
       part_of_path(X,Y,V,P) :- connected(X,Z), not(member(Z,V)), Z =\= Y, part_of_path(Z,Y,[X|V],P).
     ```
-
-- [X] **Determinare se il grafo è connesso:**:
-    ```prolog
-    ```
-- [X] **Determinare se il grafo è euleriano**:
+- [X] **Determinare il percorso minimo tra due nodi**:
     ```prolog
     ```
 
-- [ ] Calcolo dei principari indicatori di un grafo
-- [ ] Determinare se il grafo è un albero
-- [ ] Determminare quale nodo è la radice dell'albero
+- [X] **Determinare se il grafo è connesso**: un grafo è connesso se è composto da una sola componente connessa ovvero se a partire da qualsiasi nodo posso raggiungere tutti gli altri. La regola `exist_path` determina se esiste un percorso tra il nodo corrente e tutti gil altri del grafo. La regola `connected_graph` itera questa procedura per tutti i nodi. 
+    ```prolog
+      connected_graph([H]) :- node(H).
+      connected_graph([H1|[H2|T]]) :- exist_path(H1, [H2|T]), connected_graph([H2|T]), !.
+      exist_path(X, [H]) :- path(X,H,_), !.
+      exist_path(X, [H|T]) :- path(X,H,_), exist_path(X, T), !.
+    ```
+- [X] **Determinare se il grafo è Euleriano**: dal Teorema di Eurelo sappiamo che un grafo è eureliano (ammette ciclo euleriano) se è connesso e se ogni nodo ha grado pari.
+    ```prolog
+      eulerian([H]) :- degree(H, N), even(N).
+      eulerian([H|T]) :- connected_graph([H|T]), degree(H, N), even(N), eulerian(T), !.
+    ```
+- [X] **Determinare ciclo Hamiltoniano sul grafo**:
+    ```prolog
+    
+    ```
+- [X] Determinare se il grafo è un albero
 - [ ] Determinare se il grafo è bipartito
 - [ ] Determinare il colore cromatico
 
 - [ ] Determianre la distanza tra due nodi e il percorso minimo
-- [ ] Determinare cammini, passeggiate e cicli sul grafo
 
 ## Contributors
 <table>
