@@ -33,9 +33,19 @@ apparirà una schermata che presenterà all'utente la rappresentazione grafica d
 ### Rules
 L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
 
-- [X] Determinare il numero di nodi
-- [X] Determinare il numero di archi
-- [ ] Presenza di un percorso tra due nodi
+- [X] **Determinare il numero di nodi**: abbiamo definito la regola `list_lenght`, la quale data una generica lista ne conta la lunghezza; costruiamo una lista che contiene tutti i fatti `node` e poi la passiamo alla regola che ne calcola la lunghezza.
+  ```prolog
+    list_lenght([],0).
+    list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
+    list_node(L) :- findall(X, node(X), L).
+    n_nodes(N) :- list_node(X), list_lenght(X,N).
+  ```
+- [X] **Determinare il numero di archi**: abbiamo definito una regola analoga analoga a quella per i nodi.
+  ```prolog
+    list_edge(L) :- findall(X, edge(X,_), L).
+    n_edges(N) :- list_edge(X), list_lenght(X,N). 
+   ```
+- [ ] **Presenza di un percorso tra due nodi**:
 - [ ] Presenza di un cammino tra due nodi
 - [ ] Calcolo dei principari indicatori di un grafo
 - [ ] Determinare se il grafo è eureliano
