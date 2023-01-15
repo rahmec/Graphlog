@@ -8,16 +8,19 @@ edge(1,2).
 edge(2,4).
 edge(2,3).
 edge(1,4).
-%poiche il grafo è simmetrico
+
 edge_s(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge_s(X,Y); edge(X,Y).
-%trovare il numero di nodi e di archi
+
 list_edge(L) :- findall(X, edge(X,_), L).
 list_node(L) :- findall(X, node(X), L).
 list_lenght([],0).
 list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
 n_nodes(N) :- list_node(X), list_lenght(X,N).
 n_edges(N) :- list_edge(X), list_lenght(X,N).
+
+star(X,L) :- findall(Y, connected(X,Y), L).
+degree(X, N) :- star(X,L), list_lenght(L,N). 
 
 last(X,[X]).
 last(X, [_|T]) :- last(X, T).
@@ -30,22 +33,15 @@ unique_elements([]).
 unique_elements([X]).
 unique_elements([H|T]) :- not_in_list(H,T), unique_elements(T),!. 
 
+shortest_path(X,Y,P) :- path(X,Y,P), shortest_path_length(X,Y,N), list_lenght(P,N).
+shortest_path_length(X,Y,N) :- setof(P, path(X,Y,P), Set), shortest_array_length(Set, N).
+shortest_array_length([H|T], N) :- list_lenght(H,Z), shortest_array_length_procedure([H|T], Z, N).
+shortest_array_length_procedure([H], Min, N) :- list_lenght(H, Z), N is min(Min, Z).
+shortest_array_length_procedure([H|T], Min, N) :- list_lenght(H, L), Min2 is min(Min,L), shortest_array_length_procedure(T, Min2, N).
+
+path(X,Y,P) :- part_of_path(X,Y,[],L), reverse(P,L).
+part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
+part_of_path(X,Y,V,P) :- connected(X,Z), not(member(Z,V)), Z =\= Y, part_of_path(Z,Y,[X|V],P).
+
 walk([X,Y]) :- connected(X,Y).
 walk([H|[H1|T]]) :- edged(H,H1), walk([H1|T]), unique_elements([H|[H1|T]]).
-
-%path([H|L],Y) :- last(X,L), edged(X, Z), not_in_list(Z, [H|L]), append([H|L], Z, F), last(Y,F), print(F).
-part_of_path(X,Y,L) :- not(last(Y, L)), unique_elements(L), not(member(Y, L)), walk(L).
-
-%un path tra a e b esiste se esiste un percorso tra tra questi due, questo è la lista Q rovesciata
-%path(A,B,Path) :-       travel(A,B,[A],Q), reverse(Q,Path).
-
-%travel(A,B,P,[B|P]) :- connected(A,B).
-% Si ottiene un percorso da A a B a condizione che A sia collegato a un nodo C diverso da B che non si trova sulla parte del percorso visitata in precedenza, e si continua a trovare un percorso da C a B
-%travel(A,B,Visited,Path) :- connected(A,C), C \== B, \+member(C,Visited), travel(C,B,[C|Visited],Path). 
-
-path([H|T], Y) :- connected(H,Y), reverse(Q,[H|T]), print(Q).
-path([H|T], Y) :- connected(H,Z), not(member(Z,[H|T])), path([Z|[H|T]],Y).
-
-%path(X,Y) :- edge(X,Y).
-%path(X,Y,[X|T]) :- unique_elements([X|T]), walk([X|T]), last(Y,[X|T]).
-%path(X,Y, L) :- edge(X,N), not_in_list(N,L). 
