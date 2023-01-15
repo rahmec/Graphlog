@@ -82,13 +82,16 @@ La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lu
       eulerian([H]) :- degree(H, N), even(N).
       eulerian([H|T]) :- connected_graph([H|T]), degree(H, N), even(N), eulerian(T), !.
     ```
-- [X] **Determinare ciclo Hamiltoniano sul grafo**: un ciclo Hamiltoniano attraversa tutti i nodi del grafo una e una solta volta, 
+- [X] **Determinare ciclo Hamiltoniano sul grafo**: un ciclo Hamiltoniano attraversa tutti i nodi del grafo una e una solta volta; per prima cosa tra tutti i path controllo che ne esista uno che inizia in un nodo e finisce in un nodo connesso al nodo iniziale, se un path di questo tipo esiste allora controllo che l'ultimo elemento del Path sia connesso al primo nodo e che la lunghezza del percorso ottenuta sia pari al numero di nodi.
     ```prolog
-    
+      hamiltonian([H|T], P) :- check_hamiltonian_cycles(H, T, P).
+      check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), list_lenght(P, N), last(Z, P), connected(Z,X), append(P, [X], Y), !.
+      check_hamiltonian_cycles(X, [H|T], P) :- check_hamiltonian_cycles(X, T, P). 
     ```
-- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno.
+- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno. Allora affinchè il grafo sia un albero deve soddisfare `conntected_graph` e inoltre che il numero di nodi e il numero di archi siano collegati dalla relazione descritta.
+Abbiamo deciso di mettere prima la condizione sui nodi ed archi perchè se quella non viene rispettata non siamo in presenza di un albero, la clausola `conntected_graph` sarebbe più dispendiosa da verificare.
     ```prolog
-    
+      tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
 
 
