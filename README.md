@@ -74,13 +74,12 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
       eulerian([H]) :- degree(H, N), even(N).
       eulerian([H|T]) :- connected_graph([H|T]), degree(H, N), even(N), eulerian(T), !.
     ```
-- [X] **Determinare ciclo Hamiltoniano sul grafo**:
+- [X] **Determinare ciclo Hamiltoniano sul grafo**: un ciclo Hamiltoniano attraversa tutti i nodi del grafo una e una solta volta, 
     ```prolog
     
     ```
-- [X] Determinare se il grafo è un albero
-- [ ] Determinare se il grafo è bipartito
-- [ ] Determinare il colore cromatico
+- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno 1.
+
 
 ## Contributors
 <table>
