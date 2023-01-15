@@ -31,28 +31,35 @@ apparirà una schermata che presenterà all'utente la rappresentazione grafica d
 ### Facts
 
 ### Rules
-L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. Le action implementeate sono:
+L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue una azione in riposta ad una certa condizione. La percezione che funziona da trigger per le azioni prestabilite è l'interazione da parte dell'utente tramite UI. 
 
-- [X] **Determinare il numero di nodi**: abbiamo definito la regola `list_lenght`, la quale data una generica lista ne conta la lunghezza; costruiamo una lista che contiene tutti i fatti `node` e poi la passiamo alla regola che ne calcola la lunghezza.
+Segue una lista delle action implementate e delle regole che le realizzano:
+
+- [X] **Determinare il numero di nodi**: la regola `list_lenght\2`, data una generica lista, ne conta la lunghezza; costruiamo una lista che contiene tutti gli oggetti della relazione unaria `node\1` e la lunghezza di questa lista è proprio il numero di nodi. 
+La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lunghezza.
   ```prolog
     list_lenght([],0).
     list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
     list_node(L) :- findall(X, node(X), L).
     n_nodes(N) :- list_node(X), list_lenght(X,N).
   ```
-- [X] **Determinare il numero di archi**: abbiamo definito una regola analoga analoga a quella per i nodi.
+  
+- [X] **Determinare il numero di archi**: si procede in maniera analoga a quanto visto per la regola precedente, definiamo una regola che crea una lista degli archi e poi se ne calcola la lunghezza. Implementata dalla regola `n_edges\1`.
   ```prolog
     list_edge(L) :- findall(X, edge(X,_), L).
     n_edges(N) :- list_edge(X), list_lenght(X,N). 
    ```
-- [X] **Determinare la stella di un nodo e il suo grado**: la stella è l'insieme di archi adiacenti al nodo; il segeunte fatto ritorna una lista dei nodi che hanno una connessione diretta con quello indicato. Per determinare il grado riutilizziamo il predicato list lenght.
+   
+- [X] **Determinare la stella di un nodo e il suo grado**: la stella di un nodo è l'insieme di archi incidenti al nodo, `star\1` non fa altro che creare una lista di tutti quei nodi che sono adiacenti al nodo `X` (facciamo uso della regola `connected\2` in quanto trattiamo grafi simmetrici). Il grado del nodo non è altro che la cardinalità della stella perciò ci basta calcolare la lunghezza della lista risultante.
   ```prolog
+    edge_s(X,Y) :- edge(Y,X).
+    connected(X,Y) :- edge_s(X,Y); edge(X,Y).
     star(X,L) :- findall(Y, connected(X,Y), L).
     degree(X, N) :- star(X,L), list_lenght(L,N). 
   ```
 - [ ] Determinare il nodo con grado minimo/massimo
 
-- [X] **Percorso tra due nodi**: un percorso è una sequenza di nodi (o archi) adiacenti che non si ripetono, per determinare il percorso tra due nodi abbiamo bisogno di costruirlo in maniera incrementale. La regola `part_of_path\4` è una relazione tra i nodi di partenza e arrivo, i nodi visitati fino a quel momento e il path complessivo. Se X non è connesso direttamente a Y allora cerco uno Z che non è membro di quelli visitati che è in connesso a Y o a sua volta connesso a qualcuno che è connesso a Y.
+- [X] **Percorso tra due nodi**: un percorso è una sequenza di nodi (o archi) adiacenti che non si ripetono, per determinare il percorso tra due nodi abbiamo bisogno di costruirlo in maniera incrementale. La regola `part_of_path\4` è una relazione tra i nodi di partenza e arrivo, i nodi visitati fino a quel momento e il path complessivo. Se X non è connesso direttamente a Y allora cerco uno Z che non è membro di quelli visitati che connesso a Y o a sua volta connesso a qualcuno che è connesso a Y.
     ```prolog
       path(X,Y,P) :- part_of_path(X,Y,[],L), reverse(P,L).  
       part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
@@ -62,15 +69,16 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
     ```prolog
     ```
 
-- [X] **Determinare se il grafo è connesso**: un grafo è connesso se è composto da una sola componente connessa ovvero se a partire da qualsiasi nodo posso raggiungere tutti gli altri. La regola `exist_path` determina se esiste un percorso tra il nodo corrente e tutti gil altri del grafo. La regola `connected_graph` itera questa procedura per tutti i nodi. 
+- [X] **Determinare se il grafo è connesso**: un grafo è connesso se è composto da una sola componente connessa ovvero se a partire da qualsiasi nodo posso raggiungere tutti gli altri. La regola `exist_path\2` determina se esiste un percorso tra il nodo corrente e tutti gil altri del grafo. La regola `connected_graph\1` itera questa procedura per tutti i nodi. 
     ```prolog
       connected_graph([H]) :- node(H).
       connected_graph([H1|[H2|T]]) :- exist_path(H1, [H2|T]), connected_graph([H2|T]), !.
       exist_path(X, [H]) :- path(X,H,_), !.
       exist_path(X, [H|T]) :- path(X,H,_), exist_path(X, T), !.
     ```
-- [X] **Determinare se il grafo è Euleriano**: dal Teorema di Eurelo sappiamo che un grafo è eureliano (ammette ciclo euleriano) se è connesso e se ogni nodo ha grado pari.
+- [X] **Determinare se il grafo è Euleriano**: dal Teorema di Eurelo sappiamo che un grafo è eureliano (ammette ciclo euleriano) se è connesso e se ogni nodo ha grado pari. Quindi riutilizziamo la regola che determina se il grafo è connesso e richiediamo che il grado di ogni nodo sia pari, per farlo utilizziamo la regola `even\1`.
     ```prolog
+      even(X) :- Z is mod(X, 2), Z == 0.
       eulerian([H]) :- degree(H, N), even(N).
       eulerian([H|T]) :- connected_graph([H|T]), degree(H, N), even(N), eulerian(T), !.
     ```
@@ -78,15 +86,19 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
     ```prolog
     
     ```
-- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno 1.
+- [X] **Determinare se il grafo è un albero**: un grafo simmetrico è un albero se e solo se risulta connesso e ha un numero di archi pari al numero di nodi meno.
+    ```prolog
+    
+    ```
+
 
 
 ## Contributors
 <table>
   <tbody>
     <tr>
-    <td align="center"><a href="https://github.com/OT-Rax"><img src="https://i.pinimg.com/736x/a4/84/12/a48412e0969152efac9ae07c308a5143.jpg"" width="72px;"   alt=""/><br /><sub><b>Rahmi El Mehcri</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/DavideDeZuane"><img src="https://i.pinimg.com/736x/a4/84/12/a48412e0969152efac9ae07c308a5143.jpg"" width="72px;"   alt=""/><br /><sub><b>Davide De Zuane</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/OT-Rax"><img src="https://avatars.githubusercontent.com/u/61871646?v=4" width="72px;"/><br /><sub><b>Rahmi El Mehcri</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/DavideDeZuane"><img src="https://avatars.githubusercontent.com/u/73750232?v=4" style="border-radius: 50%;" width="72px;"></img><br /><sub><b>Davide De Zuane</b></sub></a><br /></td>
     </tr>
    </tbody>
   </table>
