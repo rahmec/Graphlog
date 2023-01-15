@@ -82,8 +82,6 @@ L'agente che abbiamo realizzato è del tipo **Simple-Reflex** in quanto esegue u
 - [ ] Determinare se il grafo è bipartito
 - [ ] Determinare il colore cromatico
 
-- [ ] Determianre la distanza tra due nodi e il percorso minimo
-
 ## Contributors
 <table>
   <tbody>
