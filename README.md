@@ -63,7 +63,21 @@ La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lu
     list_edge(L) :- findall(X, edge(X,_), L).
     n_edges(N) :- list_edge(X), list_lenght(X,N). 
    ```
-   
+ 
+- [X] **Determinare la densità del grafo**: la densità del grafo è definita come il rapporto rapporto tra il numero di archi presenti nel grafo e il massimo numero di archi che il grafo può contenere (ovvero nel caso in cui siamo completamente connesso e simmetrico è il coefficente binomiale). Fornisce un indicazione in sulla connettività del grafo e su quanti archi possiasmo ancora aggiungere.
+  ```prolog
+    bc(N, 0, 1) :- N #>= 0.
+    bc(N, N, 1) :- N #> 0. 
+    bc(M, N, R) :-
+      N #> 0, M #> N, R #>= M,       
+      M1 #= M - 1, N1 #= N - 1,
+      bc(M1, N1, R1), bc(M1, N, R2),
+      R #= R1 + R2
+    .
+    truncate(X,N,Result):- X >= 0, Result is floor(10^N*X)/10^N, !.
+    graph_density(N) :- n_nodes(V), n_edges(E), bc(V,2,X), T is E/X, truncate(T,2,N).   
+  ```
+  Nota: Invece che usare is, il quale è più un approccio imperativo, si utilizzano gli operatori della constraint logic programming  (CLP) in quanto  prolog fornisce supporto anche a quest'ultima.
 - [X] **Determinare la stella di un nodo e il suo grado**: la stella di un nodo è l'insieme di archi incidenti al nodo, `star\1` non fa altro che creare una lista di tutti quei nodi che sono adiacenti al nodo `X` (facciamo uso della regola `connected\2` in quanto trattiamo grafi simmetrici). Il grado del nodo non è altro che la cardinalità della stella perciò ci basta calcolare la lunghezza della lista risultante.
   ```prolog
     edge_s(X,Y) :- edge(Y,X).
@@ -79,8 +93,13 @@ La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lu
       part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
       part_of_path(X,Y,V,P) :- connected(X,Z), not(member(Z,V)), Z =\= Y, part_of_path(Z,Y,[X|V],P).
     ```
-- [X] **Determinare il percorso minimo tra due nodi**:
+- [X] **Determinare il percorso minimo tra due nodi**: per determinare il percorso di lunghezza minimi dati due noti `X` e `Y`, cerchiamo tutti i possibili percorsi che li collegano e cofrontiamo le loro lunghezze. Per ogni percorso, che non è altro che un array, ne confrontiamo la lunghezza con il minimo incontrato fino a quel momento; se ne troviamo uno più corto allora aggiorniamo il valore del minimo.
     ```prolog
+      shortest_path(X,Y,P) :- path(X,Y,P), shortest_path_length(X,Y,N), list_lenght(P,N).
+      shortest_path_length(X,Y,N) :- setof(P, path(X,Y,P), Set), shortest_array_length(Set, N).
+      shortest_array_length([H|T], N) :- list_lenght(H,Z), shortest_array_length_procedure([H|T], Z, N).
+      shortest_array_length_procedure([H], Min, N) :- list_lenght(H, Z), N is min(Min, Z).
+      shortest_array_length_procedure([H|T], Min, N) :- list_lenght(H, L), Min2 is min(Min,L), shortest_array_length_procedure(T, Min2, N).
     ```
 
 - [X] **Determinare se il grafo è connesso**: un grafo è connesso se è composto da una sola componente connessa ovvero se a partire da qualsiasi nodo posso raggiungere tutti gli altri. La regola `exist_path\2` determina se esiste un percorso tra il nodo corrente e tutti gil altri del grafo. La regola `connected_graph\1` itera questa procedura per tutti i nodi. 
