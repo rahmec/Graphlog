@@ -1,4 +1,5 @@
-:- use_module(library(clpfd)). 
+:- use_module(library(lists)).
+:- use_module(library(js)).
 
 node(1).
 node(2).
@@ -24,10 +25,7 @@ init :-
     html(TxT1,N),
     n_edges(E),
     get_by_id('result_edges',TxT2),
-    html(TxT2,E),
-    graph_density(D),
-    get_by_id('result_density',TxT3),
-    html(TxT3,D)
+    html(TxT2,E)
 .
 
 % ################################################
@@ -41,23 +39,6 @@ list_lenght([],0).
 list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
 n_nodes(N) :- list_node(X), list_lenght(X,N).
 n_edges(N) :- list_edge(X), list_lenght(X,N).
-
-
-% coefficente binomiale, questi sono i casi standard non ricorsivi
-bc(N, 0, 1) :- N #>= 0.
-bc(N, N, 1) :- N #> 0. 
-bc(M, N, R) :-
-    N #> 0,        % The N = 0 case is already covered in the first base case
-    M #> N,        % The M = N case is already covered in the second base case
-    R #>= M,       % This constraint prevents unbounded search in non-solution space
-    M1 #= M - 1,   % The rest of this is just the given formula
-    N1 #= N - 1,
-    bc(M1, N1, R1),
-    bc(M1, N, R2),
-    R #= R1 + R2
-.
-truncate(X,N,Result):- X >= 0, Result is floor(10^N*X)/10^N, !.
-graph_density(N) :- n_nodes(V), n_edges(E), bc(V,2,X), T is E/X, truncate(T,2,N).   
 
 star(X,L) :- findall(Y, connected(X,Y), L).
 degree(X, N) :- star(X,L), list_lenght(L,N). 
@@ -80,7 +61,7 @@ walk([H|[H1|T]]) :- edged(H,H1), walk([H1|T]), unique_elements([H|[H1|T]]).
 
 path(X,Y,P) :- part_of_path(X,Y,[],L), reverse(P,L).
 part_of_path(X,Y,V,[Y|[X|V]]) :- connected(X,Y).
-part_of_path(X,Y,V,P) :- connected(X,Z), not(member(Z,V)), Z =\= Y, part_of_path(Z,Y,[X|V],P).
+part_of_path(X,Y,V,P) :- connected(X,Z), \+member(Z,V), Z =\= Y, part_of_path(Z,Y,[X|V],P).
 
 shortest_path(X,Y,P) :- path(X,Y,P), shortest_path_length(X,Y,N), list_lenght(P,N).
 shortest_path_length(X,Y,N) :- setof(P, path(X,Y,P), Set), shortest_array_length(Set, N).

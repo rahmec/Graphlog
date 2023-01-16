@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<script type="text/javascript" src="function.js"></script>
+	<script type="text/javascript" src="js/function.js"></script>
 </head>
 
 <body>
@@ -113,7 +113,7 @@
 					-->
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 						<div class="alert alert-info d-flex" role="alert">
-							Cammino minimo tra due nodi <button class="btn btn-secondary ml-auto" onclick="path()"><i class="fa-solid fa-bezier-curve"></i></button>
+							Cammino minimo tra due nodi <span id="min_path" class="ml-auto mr-2"></span><button class="btn btn-secondary" onclick="path()"><i class="fa-solid fa-bezier-curve"></i> Path</button>
 						</div>
 						<div class="alert alert-info" role="alert">
 							Grafo Euleriano?
@@ -121,8 +121,8 @@
 						<div class="alert alert-info" role="alert">
 							Grafo Hamiltoniano?
 						</div>
-						<div class="alert alert-info" role="alert">
-							Il grafo &eacute; un Albero?
+						<div class="alert alert-info d-flex" role="alert">
+							Il grafo &eacute; un Albero? <span class="ml-auto mr-2" id="tree"></span><button class="btn btn-primary" onclick="tree()"><i class="fa-solid fa-tree"></i> Check</button>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
