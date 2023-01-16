@@ -240,6 +240,11 @@ function submit(txt_nodes, txt_edges){
 
 	session.query('init.');
 	session.answer((a) => {console.log(pl.format_answer(a))}) 
+
+	n_edges = data.edges.length;
+	n_nodes = data.nodes.length;
+	density =  n_edges / binomial(n_nodes,2);
+	document.getElementById('result_density').innerHTML = density;
 }
 
 function parse_json_edges(str){
@@ -358,6 +363,7 @@ function tree(){
 		}) 
 
 }
+
 function puri(answer){
     console.log(session.format_answer(answer));
 }
