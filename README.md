@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom:5px;">
-  <img src="assets/img/logo.png" sytle="width:300px;height:auto">
+  <img src="https://raw.githubusercontent.com/OT-Rax/Graphlog/main/assets/img/logo-trasnparent.png" width="150px">
 </p>
 
 <h1 align="center" style="font-weight:800; font-size:80px"> GraphLog</h1>
@@ -108,7 +108,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
 ## JavaScript
-
+L'interprete prolog per js mette a disposizione delle regole per manipolare il DOM, abbiamo utilizzato queste regole per far visualizzare i risultati delle query sulla pagina web.
 
 
 ## Contributors
