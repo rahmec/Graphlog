@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom:5px;">
-  <img src="assets/img/logo.png" sytle="width:300px;height:auto">
+  <img src="assets/img/logo-transparent.png" sytle="width:300px;height:auto">
 </p>
 
 <h1 align="center" style="font-weight:800; font-size:80px"> GraphLog</h1>
