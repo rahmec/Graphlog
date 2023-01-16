@@ -75,6 +75,15 @@ session.consult('prolog/default.pl', {
     },
 });
 
+function default_query(){
+	session.query('n_nodes(N).', {
+		success: function (goal) {
+			console.log('Query went well!')
+			session.answers(puri);
+		}
+	})
+}
+
 /*
 ################################################
 Parsing Function
@@ -99,7 +108,7 @@ function submit(txt_nodes, txt_edges){
   		success: function () { console.log('Went well')},
   		error: function (err) { console.log(err) },
 	});
-	session.query("node(X).", {
+	session.query("n_nodes(X), n_edges(Y).", {
 		success: function (goal) {
 		    console.log("Query parsing went well");
 		    session.answers(puri);
@@ -111,6 +120,11 @@ function submit(txt_nodes, txt_edges){
 	
 	document.getElementById('action').style.display = "none";
 	document.getElementById('query').style.display = "block";
+	console.log('prova');
+	session.consult('/prolog/default.pl');
+	session.query('init.');
+	session.answer((a) => {console.log(pl.format_answer(a))}) 
+	console.log('dopo prova');
 }
 
 function parse_json_edges(str){

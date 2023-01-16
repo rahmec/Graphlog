@@ -1,3 +1,5 @@
+:- use_module(library(clpfd)). 
+
 node(1).
 node(2).
 node(3).
@@ -9,6 +11,29 @@ edge(2,4).
 edge(2,3).
 edge(1,4).
 
+% Se lavori da CLI commenta questa parte che altrimenti non ti compila
+% ################################################
+% DOM MANIPULATION
+% ################################################
+
+:- use_module(library(dom)).
+
+init :- 
+    n_nodes(N),
+    get_by_id('result_nodes',TxT1),
+    html(TxT1,N),
+    n_edges(E),
+    get_by_id('result_edges',TxT2),
+    html(TxT2,E),
+    graph_density(D),
+    get_by_id('result_density',TxT3),
+    html(TxT3,D)
+.
+
+% ################################################
+
+
+
 edge_s(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge_s(X,Y); edge(X,Y).
 
@@ -18,6 +43,23 @@ list_lenght([],0).
 list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
 n_nodes(N) :- list_node(X), list_lenght(X,N).
 n_edges(N) :- list_edge(X), list_lenght(X,N).
+
+
+% coefficente binomiale, questi sono i casi standard non ricorsivi
+bc(N, 0, 1) :- N #>= 0.
+bc(N, N, 1) :- N #> 0. 
+bc(M, N, R) :-
+    N #> 0,        % The N = 0 case is already covered in the first base case
+    M #> N,        % The M = N case is already covered in the second base case
+    R #>= M,       % This constraint prevents unbounded search in non-solution space
+    M1 #= M - 1,   % The rest of this is just the given formula
+    N1 #= N - 1,
+    bc(M1, N1, R1),
+    bc(M1, N, R2),
+    R #= R1 + R2
+.
+truncate(X,N,Result):- X >= 0, Result is floor(10^N*X)/10^N, !.
+graph_density(N) :- n_nodes(V), n_edges(E), bc(V,2,X), T is E/X, truncate(T,2,N).   
 
 star(X,L) :- findall(Y, connected(X,Y), L).
 degree(X, N) :- star(X,L), list_lenght(L,N). 
