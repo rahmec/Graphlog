@@ -128,6 +128,25 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
     ```
 ## JavaScript
 L'interprete prolog per js mette a disposizione delle regole per manipolare il DOM, abbiamo utilizzato queste regole per far visualizzare i risultati delle query sulla pagina web.
+Un esempio è il seguente metodo `init\0` che dopo aver risolto i fatti da noi definiti aggiunge il risultato direttamente all'interno del DOM:
+- il meotodo `get_by_id\2` permette di recuperare un elemento del DOM attravderso un ID;
+- il metodo `html\2` specificando l'elemento consente di aggionrane il contenuto HTML.
+
+```prolog
+  :- use_module(library(dom)).
+
+  init :- 
+    n_nodes(N),
+    get_by_id('result_nodes',TxT1),
+    html(TxT1,N),
+    n_edges(E),
+    get_by_id('result_edges',TxT2),
+    html(TxT2,E),
+    graph_density(D),
+    get_by_id('result_density',TxT3),
+    html(TxT3,D)
+  .
+```
 
 
 ## Contributors
