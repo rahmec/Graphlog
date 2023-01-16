@@ -148,6 +148,8 @@ Un esempio è il seguente metodo `init\0` che dopo aver risolto i fatti da noi d
   .
 ```
 
+La libreria `vis.js` utilizza come struttura dati per costruire il grafo degli oggetti JSON per questo motivo è necessario convertire tali oggetti nei fatti con cui può lavorare il prolog. La libreria `tau-prolog` mette a disposizione dei metodi built-in per convertire JSON a atomi in prolog, tuttavia abbiamo preferito creare dei nostri metodi per eseguire questa conversione in quanto è stata utilizzata anche per la manipolazione del grafo.
+
 
 ## Contributors
 <table>
