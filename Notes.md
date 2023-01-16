@@ -11,3 +11,6 @@ Invece che usare is, il quale è più un approccio imperativo, si utilizzano gli
 
 Per calcolare la densità del grafo abbiamo implementato il coefficente binomiale
 Per eseguire il troncamento del risultato (ovvero limitare il numero di cifre decimali dopo la virgola) abbiamo implementato la seguente regola per troncare fino alla x cifra  $trunc(n,x) = [10^2 \cdot x]/10^n$
+
+
+Per selezionare il secondo nodo su visjs basta fare un click prolungato

@@ -5,6 +5,9 @@
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script type="text/javascript" src="js/tau-prolog.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Import Bootstrap & Style-->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/style.css">
@@ -61,52 +64,70 @@
 						<button class="btn btn-secondary"><i class="fa-solid fa-shuffle"></i></i> Random</button>
 					</div>
 				</div>
-			</div>
-			<div class="col-xl-6 pr-5" id="query" style="display: none;">
+			</div>			
+			<div class="col-xl-5 pr-5 m-5" id="query" style="display: none;">
 				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 					<li class="nav-item">
-					  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Structure</a>
+					  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-solid fa-circle-nodes"></i> Structure</a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Query</a>
+					  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa-solid fa-question"></i> Query</a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Other</a>
+					  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"> <i class="fa-solid fa-otter"></i> Other</a>
 					</li>
 				  </ul>
 				  <div class="tab-content" id="pills-tabContent">
+					<!-- 
+					##################################
+					# Structure
+					##################################
+					-->
 					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 						<div class="alert alert-info d-flex" role="alert" id="n_nodes">
-							Number of Nodes: <span id="result_nodes" style="margin-left: auto;"></span>
+							Numero di nodi: <span id="result_nodes" style="margin-left: auto;"></span>
 						</div>
 						<div class="alert alert-info d-flex" role="alert" id="n_edges">
-							Number of Edges: <span id="result_edges" style="margin-left: auto;"></span>
+							Numero di archi: <span id="result_edges" style="margin-left: auto;"></span>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Densità del Grafo <span id="result_density" style="margin-left: auto;"></span>
+							Densit&agrave; del Grafo <span id="result_density" style="margin-left: auto;"></span>
 						</div>
-						
+						<div class="alert alert-info d-flex" role="alert">
+							Massimo Insieme Stabile: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							Massimo Abbinamento: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							Minima Copertuna con Archi: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							Minima Copertura con Nodi: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+						</div>
 					</div>
+					<!-- 
+					##################################
+					# Query 
+					##################################
+					-->
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-						<div class="alert alert-info" role="alert" >
-							Number of Nodes
+						<div class="alert alert-info d-flex" role="alert">
+							Cammino minimo tra due nodi <button class="btn btn-secondary ml-auto" onclick="path()"><i class="fa-solid fa-bezier-curve"></i></button>
 						</div>
 						<div class="alert alert-info" role="alert">
-							Cammino minimo tra due nodi
+							Grafo Euleriano?
 						</div>
 						<div class="alert alert-info" role="alert">
-
+							Grafo Hamiltoniano?
+						</div>
+						<div class="alert alert-info" role="alert">
+							Il grafo &eacute; un Albero?
 						</div>
 					</div>
 					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
 				  </div>
 			</div>
-
-
-
-
-
-
 		</div>
 	</div>	
 	<script type="text/javascript" src="js/function.js"></script>

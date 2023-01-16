@@ -11,10 +11,10 @@ Default Graph
 ################################################
 */
 var nodes = new vis.DataSet([
-    {id: 1, label: 'Node 1'},
-    {id: 2, label: 'Node 2'},
-    {id: 3, label: 'Node 3'},
-    {id: 4, label: 'Node 4'},
+    {id: 1, label: 'Node 1', shape: "dot"},
+    {id: 2, label: 'Node 2', shape: "dot"},
+    {id: 3, label: 'Node 3', shape: "dot"},
+    {id: 4, label: 'Node 4', shape: "dot"},
 ]);
 
 var edges = new vis.DataSet([
@@ -32,8 +32,88 @@ var data = {
 var container = document.getElementById('mynetwork');
 var options = {
 	clickToUse: true,
+	nodes:{
+		shape: 'dot',
+		size: 20,
+	},
+	interaction: { 
+		navigationButtons: false,
+	},
+	manipulation: {
+		enabled: true,
+		//la funzione addNode viene chiamata prima che avvenga l'azione
+		//quando le funzioni che aggiungono elementi vengono realizzata è necessario fare una query che aggiorni i valori
+		addNode: function(nodeData,callback) {
+			Swal.fire({
+				title: 'Add Node',
+				html:
+				  '<input id="node_id" class="swal2-input" type="text" placeholder="ID">' +
+				  '<input id="node_label" class="swal2-input" placeholder="Label">',
+				focusConfirm: false,
+				allowOutsideClick: false,
+				preConfirm: () => {
+					if (!document.getElementById('node_label').value || !document.getElementById('node_id').value) {
+						Swal.showValidationMessage(`Please enter all fields`)
+					  }
+				  }
+			}).then((result) => {
+				nodeData.label = document.getElementById('node_label').value;
+				nodeData.id = document.getElementById('node_id').value;
+				console.log(nodeData)
+				callback(nodeData);
+				add_node_to_kb(nodeData);
+				console.log(pl_kb_nodes_string);
+
+			})
+		},
+		addEdge: function(edgeData,callback) {
+			if (edgeData.from === edgeData.to) {
+				Swal.fire({title:'Waning', icon:'warning', text:'Non puoi collegare un nodo a se stesso'})
+				return false;
+			}
+			/*
+			var edge_from;
+			var edge_to;
+			Swal.fire({
+				title: 'Add Node',
+				html:
+				  '<input id="edge_from" class="swal2-input" type="text" placeholder="From">' +
+				  '<input id="edge_to" class="swal2-input" placeholder="To">',
+				focusConfirm: false,
+				allowOutsideClick: false,
+				preConfirm: () => {
+					edge_from = document.getElementById('edge_from').value;
+					edge_to = document.getElementById('edge_to').value
+					if (!edge_from || !edge_to) {
+						Swal.showValidationMessage(`Please enter all fields`)
+					  }
+				  }
+			}).then((result) => {
+				edgeData.from = edge_from;
+				edgeData.to = edge_to;
+				console.log(edgeData);
+				callback(edgeData);
+
+			})
+			*/
+			callback(edgeData);
+			add_edge_to_kb(edgeData);
+			console.log(pl_kb_edges_string);
+
+
+		},
+	},
 };
 var network = new vis.Network(container, data, options);
+
+network.on("click", function (params) {
+	if(params.nodes.length > 2){
+		alert('Seleziona al massimo due nodi');
+		params.nodes.pop();
+
+	}
+	console.log(params.nodes);
+  });
 
 
 /*
@@ -136,7 +216,7 @@ function parse_json_edges(str){
 		}
 		object.forEach((element) => { 
 			data.edges.add(element);
-			pl_kb_edges_string += "edge(%FROM%,%TO%). \n".replace("%FROM%", element.from).replace("%TO%", element.to);
+			pl_kb_edges_string += replace_edge_string(element);
 		})
 	} catch(e){
 		json_error(e);
@@ -153,7 +233,7 @@ function parse_json_nodes(str){
 		}
 		object.forEach((element) => {
 			data.nodes.add(element)
-			pl_kb_nodes_string += "node(%ID%). \n".replace("%ID%", element.id);
+			pl_kb_nodes_string += replace_node_string(element.id);
 		})
 	} catch (e){
 		json_error(e);
@@ -180,11 +260,45 @@ function parse_json(str){
     }
 }
 
+function add_node_to_kb(object){
+	pl_kb_nodes_string += replace_node_string(object.id);
+}
+
+function add_edge_to_kb(object){
+	pl_kb_edges_string += replace_edge_string(object);
+
+}
+
+function replace_node_string(node_id){
+	return "node(%ID%). \n".replace("%ID%", node_id);
+}
+
+function replace_edge_string(edge){
+	return "edge(%FROM%,%TO%). \n".replace("%FROM%", edge.from).replace("%TO%", edge.to)
+}
+
 /*
 ################################################
 Other
 ################################################
 */
+
+function path(){
+	Swal.fire({
+		title: 'Path tra due Nodi',
+		html:
+		  '<input id="path_from" class="swal2-input" type="text" placeholder="Label della partenza">' +
+		  '<input id="path_to" class="swal2-input" placeholder="Label di arrivo">',
+		focusConfirm: false,
+		preConfirm: () => {
+			if (!document.getElementById('path_from').value || !document.getElementById('path_to').value) {
+				Swal.showValidationMessage(`Please enter all fields`)
+			  }
+		  }
+	}).then((result) => {
+
+	})
+}
 
 function puri(answer){
     console.log(session.format_answer(answer));

@@ -32,8 +32,6 @@ init :-
 
 % ################################################
 
-
-
 edge_s(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge_s(X,Y); edge(X,Y).
 
