@@ -250,6 +250,8 @@ Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi
 - visualizzare informazioni riguardanti la struttura del grafo
 - eseguire delle tipiche query su delle proprietà che il grafico può avere, che tuttavia risultano molto dispendiose da effetturare, in termini di tempo, manualmente.
 
+### Screenshot
+![](assets/screen/Home-Graphlog.png)
 
 
 ## Contributors
