@@ -155,8 +155,15 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       arrays_dont_intersect([H|[H1|T]]) :- intersection(H,H1,X), list_lenght(X,N), N==0, arrays_dont_intersect([H|T]), arrays_dont_intersect([H1|T]).
       maximum_matching(M) :- setof(X, matching(X), S), maximum_list_in_lists(S,M).
     ```
-- [X] **Determinare l'insieme stabile massimo**: 
+- [X] **Determinare l'insieme stabile massimo**: un insieme stabile è composto da nodi che non sono adiacenti, dunque affinchè due nodi appartengano a tale insieme non devono essere connessi direttamente; per questo motivo abbiamo definito il predicato `disconnected/2` che dato un nodo verifica che questo non sia connesso con il resto della lista. La regola `subset` definisce una possibile sottolista, dunque utilizzato insieme a `setof` fornisce tutto lo spazio di ricerca per il nostro problema. Una volta determinato lo spazio di ricerca per il stable_set e ottenuto i vari risultati sotto forma di una lista di lista, cerchiamo il più grande tra queste tramite il metodo `maximum_list_in_list`. 
     ```prolog
+      subset([], []).
+      subset([E|Tail], [E|NTail]):- subset(Tail, NTail).
+      subset([_|Tail], NTail):- subset(Tail, NTail).
+      
+      disconnected(X, [H]) :- node(X), node(H), X=\=H, not(connected(X,H)).
+      disconnected(X, [H|T]) :- node(X), node(H), X=\=H, not(connected(X,H)), disconnected(X, T).
+      
       stable_set([]).
       stable_set([H]) :- node(H).
       stable_set([H|T]) :- list_node(X), subset(X,[H|T]), disconnected(H, T), stable_set(T).
