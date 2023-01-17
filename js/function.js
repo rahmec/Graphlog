@@ -365,10 +365,12 @@ function tree(){
 
 }
 
-function stable_set(){
-	session.query('maximum_matching(X).');
-	session.answer((a) => {console.log(pl.format_answer(a))}) 
-	console.log(document.getElementById('stable_set'));
+function eulerian(){
+
+}
+
+function hamiltonian(){
+	
 }
 
 function puri(answer){

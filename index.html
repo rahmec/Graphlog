@@ -117,7 +117,12 @@
 						<div class="alert alert-info d-flex" role="alert">
 							<p class="my-auto">Massimo Insieme Stabile: </p>
 							<span id="stable_set" class="ml-auto mr-3 mt-auto"></span>
-							<button class="btn btn-success" onclick="stable_set()"><i class="fa-solid fa-eye"></i></button>
+							<button 
+								class="btn btn-success" 
+								onclick=""
+							>
+								<i class="fa-solid fa-eye"></i>
+							</button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
 							<p class="my-auto">Massimo Abbinamento:</p>
@@ -156,8 +161,12 @@
 							<span id="eulerian" 
 								  class="ml-auto mr-3 mt-auto"
 					  		></span>
-							<button class="btn btn-primary">
-								<i class="fa-solid fa-arrows-spin"></i>
+							<button 
+								class="btn btn-primary"
+								onclick="eluerian()"
+							>
+								<i class="fa-solid fa-person-walking-arrow-loop-left"></i>
+								Check
 							</button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
@@ -165,8 +174,12 @@
 							<span id="hamiltoninan" 
 								  class="ml-auto mr-3 mt-auto"
 							></span>
-							<button class="btn btn-primary">
-								<i class="fa-solid fa-arrow-rotate-left"></i>
+							<button 
+								class="btn btn-primary"
+								onclick="hamiltionian()"
+							>
+								<i class="fa-solid fa-bicycle"></i>
+								Check
 							</button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
@@ -174,6 +187,19 @@
 							<span class="ml-auto mr-2" id="tree"></span>
 							<button class="btn btn-primary" onclick="tree()">
 								<i class="fa-solid fa-tree"></i> 
+								Check
+							</button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							<p class="my-auto">Bipartito?</p>
+							<span id="hamiltoninan" 
+								  class="ml-auto mr-3 mt-auto"
+							></span>
+							<button 
+								class="btn btn-primary"
+								onclick="bipartited()"
+							>
+								<i class="fa-solid fa-pause"></i>
 								Check
 							</button>
 						</div>
