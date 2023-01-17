@@ -126,7 +126,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
     ```prolog
       tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
-- [X] **Determinare coperture con nodi**: 
+- [X] **Determinare coperture con nodi**: si tratta di un insieme di nodi che toccano tutti gli archi del grafo. Quello che facciamo e prendere un sottoinsieme di nodi e vedere quali archi copre, lo facciamo tramite il predicato `edge_covered_by_nodes`, a cui passiamo tutti i possibili sottoinsieme di archi e il sottoinsieme di nodi. Andando a ricercare la lista di nodi più piccola che lo soddisfa abbiamo trovato la minima copertura con nodi 
     ```prolog
       minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
       minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
@@ -138,7 +138,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
       minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
     ```
-- [X] **Determinare coperture con archi**:
+- [X] **Determinare coperture con archi**: si tratta di un insieme di archi che tocca tutti i nodi del grafo; abbiamo pensato di costruire due liste di nodi composte rispettivamente dai nodi da cui partono gli archi e una dai nodi in cui arrivano gli archi. Se l'unione di queste due liste compone l'intero insieme dei nodi abbiamo trovato una copertura (le confrontiamo tramite il predicato `same`), il predicato `edge_array` crea una lista degli archi che formano una copertura. Per trovare quello minimo ci basta prendere il set composto da tutte le possibili liste di archi che formano una copertura e prendere quella di lunghezza minima.
     ```prolog
       edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).
       covered_nodes(E, N) :- elements_union(E, X), sort(X, N).
@@ -147,7 +147,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       elements_union_steps([H|T], U, X) :- append(H, U, Z), elements_union_steps(T, Z, X).
       minimum_edge_cover(E) :- setof(X, edge_cover(X), S), minimum_list_in_lists(S, E).
     ```
-- [X] **Determinare l'abbinamento massimo**:
+- [X] **Determinare gli abbinamenti**: è un insieme di archi non adiacenti; se un arco fa parte dell'insieme allora tutti gli altri nodi che partono dal primo o dal secondo nodo non possono farne parte. Per esprimere questa proprietà utilizziamo il predicato `array_dont_intersect` tramite il quale teniamo conto dei nodi non ancora toccati e dunque degli archi che sono rimasti a disposizione, una volta che tutti i nodi sono stati toccati abbiamo trovato un abbinamento. Andando a prendere il set di tutti i possibili abbinamenti e cercando quello di lunghezza massima troviamo l'abbinamento massimo.
     ```prolog
       matching(E) :- setof(X, edge_array(X), S), subset(S, E), arrays_dont_intersect(E).
       edges_subset(E) :- setof(X, edge_array(X), S), subset(S, E).
@@ -172,7 +172,8 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       maximum_stable_set(X) :- setof(Z, stable_set(Z), S), maximum_list_in_lists(S, X), !.
       stable_set_of_cardinality(X, C) :- stable_set(X), list_lenght(X, Z), Z==C, !.
     ```
-- [X] **Determinare se il grafo è bipartito**: 
+- [X] **Determinare se il grafo è bipartito**: un grafo bipartito se posso dividerlo in due insieme di nodi, in cui tutti i nodi dell'insieme sono tra loto disconessi. Procediamo con il prendere tutti i sottoinsiemi di nodi e li controllo uno ad uno per verificare se esiste un sottoinsieme in cui quei nodi sono disconnessi e in cui anche il complementare dell'insieme selezionato lo sia. Se esistono questi due insiemi il grafo è bipartito.
+Prendiamo la lista dei nodi e creiamo un grafo discennesso tramite `disconnected_graph`, tramite `subtract` vediamo otteniamo l'insisme di nodi complementare; se anche questi generano un grafo disconnesso allora abbiamo trovato i due insiemi.
     ```prolog
       disconnected_graph([H]) :- node(H).
       disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).

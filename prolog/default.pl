@@ -10,11 +10,7 @@ node(4).
 edge(1,2).
 edge(1,3).
 edge(1,4).
-edge(1,5).
-edge(2,5).
-edge(2,6).
 edge(3,4).
-edge(4,5).
 
 % Se lavori da CLI commenta questa parte che altrimenti non ti compila
 % ################################################
@@ -24,18 +20,19 @@ edge(4,5).
 :- use_module(library(dom)).
 
 init :- 
-    n_nodes(V),
-    get_by_id('result_nodes',TxT1),
-    html(TxT1,V),
-    n_edges(E),
-    get_by_id('result_edges',TxT2),
-    html(TxT2,E),
-    maximum_stable_set(S),
-    get_by_id('stable_set', TxT3),
-    html(TxT3,S),
-    minimum_edge_cover(VC),
-    get_by_id('edge_cover', TxT4),
-    html(TxT4,VC)
+    n_nodes(V), get_by_id('result_nodes',TxT1), html(TxT1,V),
+    n_edges(E), get_by_id('result_edges',TxT2), html(TxT2,E),
+    maximum_stable_set(S), get_by_id('stable_set', TxT3), html(TxT3,S),
+    minimum_edge_cover(EC), get_by_id('edge_cover', TxT4), html(TxT4,EC),
+    maximum_star(N1,Value1),
+    get_by_id('max_star', TxT5), html(TxT5, Value1),
+    get_by_id('node_max_star', TxT6), html(TxT6, N1),
+    minimum_star(N2,Value2),
+    get_by_id('min_star', TxT7), html(TxT7, Value2),
+    get_by_id('node_min_star', TxT8), html(TxT8, N2),
+    maximum_matching(M), get_by_id('matching', TxT9), html(TxT9,M),
+    minimum_vertex_cover(VC), get_by_id('vertex_cover',TxT10), html(TxT10,VC)
+
 .
 
 % ################################################
@@ -51,8 +48,26 @@ list_lenght([_|T],N1) :- list_lenght(T,N), N1 is N+1.
 n_nodes(N) :- list_node(X), list_lenght(X,N).
 n_edges(N) :- list_edge(X), list_lenght(X,N).
 
-star(X,L) :- findall(Y, connected(X,Y), L).
+star(X,L) :- setof(Y, connected(X,Y), L).
 degree(X, N) :- star(X,L), list_lenght(L,N). 
+minimum_star(N,X) :- findall(Y, star(_, Y), L), minimum_list_in_lists(L, X), star(N, X).
+maximum_star(N,X) :- findall(Y, star(_, Y), L), maximum_list_in_lists(L, X), star(N, X).
+
+subtraction(L1,[],L1).
+subtraction([],_,[]).
+subtraction(L1,L2,X) :- subtraction_calculation(L1, L2, [], X), !.
+subtraction_calculation([H|T], L2, C, X) :- \+member(H,L2), append(C, [H], U), subtraction_calculation(T, L2, U, X).
+subtraction_calculation([H|T], L2, C, X) :- member(H,L2), subtraction_calculation(T, L2, C, X).
+subtraction_calculation([H], L2, C, X) :- \+member(H, L2), append(C, [H], X).
+subtraction_calculation([H], L2, C, C) :- member(H, L2).
+
+intersection(_,[],[]).
+intersection([],_,[]).
+intersection(L1,L2,X) :- intersection_calculation(L1, L2, [], X), !.
+intersection_calculation([H|T], L2, C, X) :- member(H,L2), append(C, [H], U), intersection_calculation(T, L2, U, X).
+intersection_calculation([H|T], L2, C, X) :- \+member(H,L2), intersection_calculation(T, L2, C, X).
+intersection_calculation([H], L2, C, X) :- member(H, L2), append(C, [H], X).
+intersection_calculation([H], L2, C, C) :- \+member(H, L2).
 
 last(X,[X]).
 last(X, [_|T]) :- last(X, T).
@@ -133,7 +148,7 @@ maximum_matching(M) :- setof(X, matching(X), S), maximum_list_in_lists(S,M).
 
 disconnected_graph([H]) :- node(H).
 disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
-biparted(Z) :- list_node(L), disconnected_graph(X), subtract(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
+biparted(Z) :- list_node(L), disconnected_graph(X), subtraction(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
 
 minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
 minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
@@ -141,8 +156,8 @@ minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is min(U,N).
 minimum_list_in_lists(L, X) :- minimum_length(L, N), member(X,L), list_lenght(X,M), N==M, !.
 
 vertex_cover(X) :- list_node(L), subset(L, X), setof(Y, edge_array(Y), E), edge_covered_by_nodes(X,E).
-edge_covered_by_nodes(X, [H]) :- subtract(H,X,S), list_lenght(S,N), N=<1.
-edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
+edge_covered_by_nodes(X, [H]) :- subtraction(H,X,S), list_lenght(S,N), N=<1.
+edge_covered_by_nodes(X, [H|T]) :- subtraction(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
 minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
 
 edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).

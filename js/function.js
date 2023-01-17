@@ -147,10 +147,8 @@ var options = {
 			}).then((result) => {
 				nodeData.label = document.getElementById('node_label').value;
 				nodeData.id = document.getElementById('node_id').value;
-				console.log(nodeData)
 				callback(nodeData);
 				add_node_to_kb(nodeData);
-				console.log(pl_kb_nodes_string);
 
 			})
 		},
@@ -186,7 +184,6 @@ var options = {
 			*/
 			callback(edgeData);
 			add_edge_to_kb(edgeData);
-			console.log(pl_kb_edges_string);
 
 
 		},
@@ -358,7 +355,7 @@ function eulerian(){
 }
 
 function hamiltonian(){
-	
+
 }
 
 function puri(answer){
