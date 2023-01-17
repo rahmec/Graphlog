@@ -188,22 +188,68 @@ Un esempio è il seguente metodo `init\0` che dopo aver risolto i fatti da noi d
 - il metodo `html\2` specificando l'elemento consente di aggionrane il contenuto HTML.
 
 ```prolog
-  :- use_module(library(dom)).
+:- use_module(library(dom)).
 
-  init :- 
-    n_nodes(N),
-    get_by_id('result_nodes',TxT1),
-    html(TxT1,N),
-    n_edges(E),
-    get_by_id('result_edges',TxT2),
-    html(TxT2,E),
-    graph_density(D),
-    get_by_id('result_density',TxT3),
-    html(TxT3,D)
-  .
+init :- 
+    n_nodes(V), get_by_id('result_nodes',TxT1), html(TxT1,V),
+    n_edges(E), get_by_id('result_edges',TxT2), html(TxT2,E),
+    maximum_stable_set(S), get_by_id('stable_set', TxT3), html(TxT3,S),
+    minimum_edge_cover(EC), get_by_id('edge_cover', TxT4), html(TxT4,EC),
+    maximum_star(N1,Value1),
+    get_by_id('max_star', TxT5), html(TxT5, Value1),
+    get_by_id('node_max_star', TxT6), html(TxT6, N1),
+    minimum_star(N2,Value2),
+    get_by_id('min_star', TxT7), html(TxT7, Value2),
+    get_by_id('node_min_star', TxT8), html(TxT8, N2),
+    maximum_matching(M), get_by_id('matching', TxT9), html(TxT9,M),
+    minimum_vertex_cover(VC), get_by_id('vertex_cover',TxT10), html(TxT10,VC)
+.
 ```
 
 La libreria `vis.js` utilizza come struttura dati per costruire il grafo degli oggetti JSON per questo motivo è necessario convertire tali oggetti nei fatti con cui può lavorare il prolog. La libreria `tau-prolog` mette a disposizione dei metodi built-in per convertire JSON a atomi in prolog, tuttavia abbiamo preferito creare dei nostri metodi per eseguire questa conversione in quanto è stata utilizzata anche per la manipolazione del grafo.
+Per l'illustrazione del funzionamento di GraphLog utilizziamo il seguente esempio di riferimento:
+
+<table align="center">
+<tr>
+<td align="center"> Nodes </td>
+<td>
+
+```json
+[
+  {"id":1,"label":"Node 1"},
+  {"id":2,"label":"Node 2"},
+  {"id":3,"label":"Node 3"},
+  {"id":4,"label":"Node 4"},
+  {"id":5,"label":"Node 5"},
+  {"id":6,"label":"Node 6"},
+  {"id":7,"label":"Node 7"}
+]
+```
+</td>
+</tr>
+<tr>
+<td width="200px" align="center"> Edges </td>
+<td>
+
+```json
+[
+  {"from":1,"to":2},
+  {"from":1,"to":3},
+  {"from":1,"to":4},
+  {"from":3,"to":4},
+  {"from":4,"to":7},
+  {"from":5,"to":7},
+  {"from":2,"to":6}
+]
+```
+</td>
+</tr>
+</table>
+
+Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi comparirà un piccolo menù che consente all'utente di:
+- visualizzare informazioni riguardanti la struttura del grafo
+- eseguire delle tipiche query su delle proprietà che il grafico può avere, che tuttavia risultano molto dispendiose da effetturare, in termini di tempo, manualmente.
+
 
 
 ## Contributors
