@@ -232,20 +232,8 @@ function submit(txt_nodes, txt_edges){
   		error: function (err) { console.log(err) },
 	});
 	*/
-	
-	document.getElementById('action').style.display = "none";
-	document.getElementById('query').style.display = "block";
 
-	session.query('init.');
-	session.answer((a) => {console.log(pl.format_answer(a))})
-
-	var n_edges = data.edges.length;
-	console.log(n_edges)
-	var n_nodes = data.nodes.length;
-	console.log(n_nodes)
-	density =  n_edges / binomial(n_nodes,2);
-	console.log(density);
-	document.getElementById('result_density').innerHTML = density.toFixed(2);
+	init();
 }
 
 function parse_json_edges(str){
@@ -453,4 +441,54 @@ function binomial(n, k) {
    for (var x = n-k+1; x <= n; x++) coeff *= x;
    for (x = 1; x <= k; x++) coeff /= x;
    return coeff;
+}
+
+function randomGraph(){
+    random_node_number = Math.floor(Math.random() * 6)+4;
+    json_nodes = [];
+    json_edges = [];
+    added_edges = [];
+    for(let i=1; i<=random_node_number; i++){
+	json_nodes.push({id: i, label: 'Node '+i, shape: "dot"});
+	random_edges_number = Math.floor(Math.random() * 2)+1;
+	for(let j=0; j<random_edges_number; j++){
+	    random_node = Math.floor(Math.random() * random_node_number)+1;
+	    while(random_node == i){
+		random_node = Math.floor(Math.random() * random_node_number)+1;
+	    }
+	    var flag = true;
+	    for(let k=0; k<added_edges.length; k++){
+		if((added_edges[k][0] == i  &&  added_edges[k][1] == random_node) || (added_edges[k][0] == random_node  &&  added_edges[k][1] == i)){
+		    flag = false;
+		    break;
+		}
+	    }
+	    if(flag){
+		json_edges.push({from: i, to: random_node});
+		added_edges.push([i,random_node]);
+	    }
+	}
+    }
+    nodes = new vis.DataSet(json_nodes);
+    edges = new vis.DataSet(json_edges);
+    data.nodes = nodes;
+    data.edges = edges;
+    network = new vis.Network(container, data, options);
+    init();
+}
+
+function init(){
+    document.getElementById('action').style.display = "none";
+    document.getElementById('query').style.display = "block";
+
+    session.query('init.');
+    session.answer((a) => {console.log(pl.format_answer(a))})
+
+    var n_edges = data.edges.length;
+    console.log(n_edges)
+    var n_nodes = data.nodes.length;
+    console.log(n_nodes)
+    density =  n_edges / binomial(n_nodes,2);
+    console.log(density);
+    document.getElementById('result_density').innerHTML = density.toFixed(2);
 }
