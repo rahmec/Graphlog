@@ -207,6 +207,48 @@ init :-
 ```
 
 La libreria `vis.js` utilizza come struttura dati per costruire il grafo degli oggetti JSON per questo motivo è necessario convertire tali oggetti nei fatti con cui può lavorare il prolog. La libreria `tau-prolog` mette a disposizione dei metodi built-in per convertire JSON a atomi in prolog, tuttavia abbiamo preferito creare dei nostri metodi per eseguire questa conversione in quanto è stata utilizzata anche per la manipolazione del grafo.
+Per l'illustrazione del funzionamento di GraphLog utilizziamo il seguente esempio di riferimento:
+
+<table align="center">
+<tr>
+<td align="center"> Nodes </td>
+<td>
+
+```json
+[
+  {"id":1,"label":"Node 1"},
+  {"id":2,"label":"Node 2"},
+  {"id":3,"label":"Node 3"},
+  {"id":4,"label":"Node 4"},
+  {"id":5,"label":"Node 5"},
+  {"id":6,"label":"Node 6"},
+  {"id":7,"label":"Node 7"}
+]
+```
+</td>
+</tr>
+<tr>
+<td width="200px" align="center"> Edges </td>
+<td>
+
+```json
+[
+  {"from":1,"to":2},
+  {"from":1,"to":3},
+  {"from":1,"to":4},
+  {"from":3,"to":4},
+  {"from":4,"to":7},
+  {"from":5,"to":7},
+  {"from":2,"to":6}
+]
+```
+</td>
+</tr>
+</table>
+
+Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi comparirà un piccolo menù che consente all'utente di:
+- visualizzare informazioni riguardanti la struttura del grafo
+- eseguire delle tipiche query su delle proprietà che il grafico può avere, che tuttavia risultano molto dispendiose da effetturare, in termini di tempo, manualmente.
 
 
 ## Contributors
