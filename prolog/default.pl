@@ -1,17 +1,6 @@
 :- use_module(library(lists)).
 :- use_module(library(js)).
 
-node(1).
-node(2).
-node(3).
-node(4).
-
-%VERTEX_COVER
-edge(1,2).
-edge(1,3).
-edge(1,4).
-edge(3,4).
-
 % Se lavori da CLI commenta questa parte che altrimenti non ti compila
 % ################################################
 % DOM MANIPULATION
