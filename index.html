@@ -1,6 +1,14 @@
 <html>
 
 <head>
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
 	<!-- Import Vis.js & Tau-Prolog & Swal2 -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script type="text/javascript" src="js/tau-prolog.js"></script>
@@ -71,7 +79,17 @@
 					  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-solid fa-circle-nodes"></i> Structure</a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa-solid fa-question"></i> Query</a>
+					  <a class="nav-link" 
+					  	 id="pills-profile-tab" 
+						 data-toggle="pill" 
+						 href="#pills-profile" 
+						 role="tab" 
+						 aria-controls="pills-profile" 
+						 aria-selected="false"
+						>
+						<i class="fa-solid fa-question"></i>
+						Query
+					</a>
 					</li>
 					<li class="nav-item">
 					  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"> <i class="fa-solid fa-otter"></i> Other</a>
@@ -85,25 +103,36 @@
 					-->
 					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 						<div class="alert alert-info d-flex" role="alert" id="n_nodes">
-							Numero di nodi: <span id="result_nodes" style="margin-left: auto;"></span>
+							 <p class="my-auto">Numero di nodi:</p>
+							<span id="result_nodes" class="ml-auto mr-3 mt-auto"></span>
 						</div>
 						<div class="alert alert-info d-flex" role="alert" id="n_edges">
-							Numero di archi: <span id="result_edges" style="margin-left: auto;"></span>
+							<p class="my-auto">Numero di archi:</p>
+							<span id="result_edges" class="ml-auto mr-3 mt-auto"></span>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Densit&agrave; del Grafo: <span id="result_density" style="margin-left: auto;"></span>
+							<p class="my-auto">Densit&agrave; del Grafo: </p>
+							<span id="result_density" class="ml-auto mr-3 mt-auto"></span>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Massimo Insieme Stabile: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+							<p class="my-auto">Massimo Insieme Stabile: </p>
+							<span id="stable_set" class="ml-auto mr-3 mt-auto"></span>
+							<button class="btn btn-success" onclick="stable_set()"><i class="fa-solid fa-eye"></i></button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Massimo Abbinamento: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+							<p class="my-auto">Massimo Abbinamento:</p>
+							<span id="matching" class="ml-auto mr-3 mt-auto"></span>
+							<button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Minima Copertuna con Archi: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+							<p class="my-auto">Minima Copertuna con Archi:</p>
+							<span id="edge_cover" class="ml-auto mr-3 mt-auto"></span>
+							<button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Minima Copertura con Nodi: <span id="" style="margin-left: auto;"></span><button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
+							<p class="my-auto">Minima Copertura con Nodi:</p>
+							<span id="vertex_cover" class="ml-auto mr-3 mt-auto"></span>
+							<button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
 						</div>
 					</div>
 					<!-- 
@@ -113,16 +142,40 @@
 					-->
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 						<div class="alert alert-info d-flex" role="alert">
-							Cammino minimo tra due nodi <span id="min_path" class="ml-auto mr-2"></span><button class="btn btn-secondary" onclick="path()"><i class="fa-solid fa-bezier-curve"></i> Path</button>
-						</div>
-						<div class="alert alert-info" role="alert">
-							Grafo Euleriano?
-						</div>
-						<div class="alert alert-info" role="alert">
-							Grafo Hamiltoniano?
+							<p class="my-auto">Cammino minimo tra due nodi </p>
+							<span id="min_path" 
+								  class="ml-auto mr-2"
+							></span>
+							<button class="btn btn-primary" onclick="path()">
+								<i class="fa-solid fa-bezier-curve"></i>
+								Path
+							</button>
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
-							Il grafo &eacute; un Albero? <span class="ml-auto mr-2" id="tree"></span><button class="btn btn-primary" onclick="tree()"><i class="fa-solid fa-tree"></i> Check</button>
+							<p class="my-auto">Ammette ciclo Euleriano?</p>
+							<span id="eulerian" 
+								  class="ml-auto mr-3 mt-auto"
+					  		></span>
+							<button class="btn btn-primary">
+								<i class="fa-solid fa-arrows-spin"></i>
+							</button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							<p class="my-auto">Ammette ciclo Hamiltoniano?</p>
+							<span id="hamiltoninan" 
+								  class="ml-auto mr-3 mt-auto"
+							></span>
+							<button class="btn btn-primary">
+								<i class="fa-solid fa-arrow-rotate-left"></i>
+							</button>
+						</div>
+						<div class="alert alert-info d-flex" role="alert">
+							<p class="my-auto">Il grafo &eacute; un Albero?</p>
+							<span class="ml-auto mr-2" id="tree"></span>
+							<button class="btn btn-primary" onclick="tree()">
+								<i class="fa-solid fa-tree"></i> 
+								Check
+							</button>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>

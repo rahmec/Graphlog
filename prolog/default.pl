@@ -6,11 +6,15 @@ node(2).
 node(3).
 node(4).
 
-edge(1,3).
+%VERTEX_COVER
 edge(1,2).
-edge(2,4).
-edge(2,3).
+edge(1,3).
 edge(1,4).
+edge(1,5).
+edge(2,5).
+edge(2,6).
+edge(3,4).
+edge(4,5).
 
 % Se lavori da CLI commenta questa parte che altrimenti non ti compila
 % ################################################
@@ -20,16 +24,23 @@ edge(1,4).
 :- use_module(library(dom)).
 
 init :- 
-    n_nodes(N),
+    n_nodes(V),
     get_by_id('result_nodes',TxT1),
-    html(TxT1,N),
+    html(TxT1,V),
     n_edges(E),
     get_by_id('result_edges',TxT2),
-    html(TxT2,E)
+    html(TxT2,E),
+    maximum_stable_set(S),
+    get_by_id('stable_set', TxT3),
+    html(TxT3,S),
+    minimum_edge_cover(VC),
+    get_by_id('edge_cover', TxT4),
+    html(TxT4,VC)
 .
 
 % ################################################
 
+edge_array([X|[Y]]) :- edge(X,Y).
 edge_s(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge_s(X,Y); edge(X,Y).
 
@@ -82,3 +93,61 @@ check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), list_lenght(P,
 check_hamiltonian_cycles(X, [H|T], P) :- check_hamiltonian_cycles(X, T, P). 
 
 tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
+
+
+disconnected(X, [H]) :- node(X), node(H), X=\=H, \+connected(X,H).
+disconnected(X, [H|T]) :- node(X), node(H), X=\=H, \+connected(X,H), disconnected(X, T).
+
+stable_set([]).
+stable_set([H]) :- node(H).
+stable_set([H|T]) :- list_node(X), subset(X,[H|T]), disconnected(H, T), stable_set(T).
+stable_set([H|T]) :- list_node([H|T]), disconnected(H, T), !.
+
+maximum_stable_set(X) :- setof(Z, stable_set(Z), S), maximum_list_in_lists(S, X), !.
+stable_set_of_cardinality(X, C) :- stable_set(X), list_lenght(X, Z), Z==C, !.
+
+maximum_length([H|T], X) :- list_lenght(H, N), maximum_length_calculation(T, N, Y), X is max(N,Y).
+maximum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is max(U,N), maximum_length_calculation(T, Z, X).
+maximum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is max(U,N).
+maximum_list_in_lists(L, X) :- maximum_length(L, N), member(X,L), list_lenght(X,M), N==M, !.
+
+ordered([]).
+ordered([H]).
+ordered([H| [T|L] ]) :- H=<T, ordered([T|L]).
+
+graph([H]) :- node(H).
+graph([H|T]) :- graph(T), node(H), unique_elements([H|T]).
+
+subset([], []).
+subset([E|Tail], [E|NTail]):- subset(Tail, NTail).
+subset([_|Tail], NTail):- subset(Tail, NTail).
+
+same([H1], [H2]) :- H1 == H2.
+same([H1|T1], [H2|T2]) :- H1==H2, same(T1, T2), !.
+
+matching(E) :- setof(X, edge_array(X), S), subset(S, E), arrays_dont_intersect(E).
+edges_subset(E) :- setof(X, edge_array(X), S), subset(S, E).
+arrays_dont_intersect([H]).
+arrays_dont_intersect([H|[H1|T]]) :- intersection(H,H1,X), list_lenght(X,N), N==0, arrays_dont_intersect([H|T]), arrays_dont_intersect([H1|T]).
+maximum_matching(M) :- setof(X, matching(X), S), maximum_list_in_lists(S,M).
+
+disconnected_graph([H]) :- node(H).
+disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
+biparted(Z) :- list_node(L), disconnected_graph(X), subtract(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
+
+minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
+minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
+minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is min(U,N).
+minimum_list_in_lists(L, X) :- minimum_length(L, N), member(X,L), list_lenght(X,M), N==M, !.
+
+vertex_cover(X) :- list_node(L), subset(L, X), setof(Y, edge_array(Y), E), edge_covered_by_nodes(X,E).
+edge_covered_by_nodes(X, [H]) :- subtract(H,X,S), list_lenght(S,N), N=<1.
+edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
+minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
+
+edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).
+covered_nodes(E, N) :- elements_union(E, X), sort(X, N).
+elements_union([H|T], X) :- elements_union_steps(T, H, X).
+elements_union_steps([H], U, X) :- append(H, U, X).
+elements_union_steps([H|T], U, X) :- append(H, U, Z), elements_union_steps(T, Z, X).
+minimum_edge_cover(E) :- setof(X, edge_cover(X), S), minimum_list_in_lists(S, E).

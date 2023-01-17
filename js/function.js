@@ -5,7 +5,7 @@
 //3
 // [ ] scrivere il default kb dal file dentro js
 // [ ] funzione per creare un grafo casuale
-program = '\
+program_str = '\
 node(1). \
 node(2).\
 node(3).\
@@ -28,9 +28,6 @@ init :- \
     n_edges(E),\
     get_by_id("result_edges",TxT2),\
     html(TxT2,E),\
-    graph_density(D),\
-    get_by_id("result_density",TxT3),\
-    html(TxT3,D)\
 .\
 % ################################################\
 edge_s(X,Y) :- edge(Y,X).\
@@ -98,7 +95,7 @@ check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), list_lenght(P,
 check_hamiltonian_cycles(X, [H|T], P) :- check_hamiltonian_cycles(X, T, P). \
 tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).\
 '
-
+program='prolog/default';
 /*
 ################################################
 Default Graph
@@ -228,23 +225,27 @@ function submit(txt_nodes, txt_edges){
 	parse_json_edges(txt_edges);
 	parse_json_nodes(txt_nodes);
 	//after parsing we load the KB
-	kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
-
+	//kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
+	/*
 	session.consult(kb, {
   		success: function () { console.log('Went well')},
   		error: function (err) { console.log(err) },
 	});
+	*/
 	
 	document.getElementById('action').style.display = "none";
 	document.getElementById('query').style.display = "block";
 
 	session.query('init.');
-	session.answer((a) => {console.log(pl.format_answer(a))}) 
+	session.answer((a) => {console.log(pl.format_answer(a))})
 
-	n_edges = data.edges.length;
-	n_nodes = data.nodes.length;
+	var n_edges = data.edges.length;
+	console.log(n_edges)
+	var n_nodes = data.nodes.length;
+	console.log(n_nodes)
 	density =  n_edges / binomial(n_nodes,2);
-	document.getElementById('result_density').innerHTML = density;
+	console.log(density);
+	document.getElementById('result_density').innerHTML = density.toFixed(2);
 }
 
 function parse_json_edges(str){
@@ -362,6 +363,12 @@ function tree(){
 			document.getElementById('tree').innerHTML = session.format_answer(a);
 		}) 
 
+}
+
+function stable_set(){
+	session.query('maximum_matching(X).');
+	session.answer((a) => {console.log(pl.format_answer(a))}) 
+	console.log(document.getElementById('stable_set'));
 }
 
 function puri(answer){

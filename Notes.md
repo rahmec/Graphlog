@@ -14,3 +14,27 @@ Per eseguire il troncamento del risultato (ovvero limitare il numero di cifre de
 
 
 Per selezionare il secondo nodo su visjs basta fare un click prolungato
+
+
+
+IL metodo INTERSECTION sul matching da problemi
+IL metodo SUBTRACT da problemi sul vertex cover
+
+[
+{"from":1,"to":2},
+{"from":1,"to":3},
+{"from":1,"to":4},
+{"from":1,"to":5},
+{"from":2,"to":5},
+{"from":2,"to":6},
+{"from":3,"to":4},
+{"from":4,"to":5}
+]
+
+
+[
+{"id":1,"label":"Node 1"},
+{"id":2,"label":"Node 2"},
+{"id":3,"label":"Node 3"},
+{"id":4,"label":"Node 4"}
+]
