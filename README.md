@@ -85,7 +85,11 @@ La rules `n_nodes\1` non fa altro che crare la lista dei nodi e calcolarne la lu
     star(X,L) :- findall(Y, connected(X,Y), L).
     degree(X, N) :- star(X,L), list_lenght(L,N). 
   ```
-- [ ] Determinare il nodo con grado minimo/massimo
+- [x] Determinare il nodo con grado minimo/massimo: per calcolare il nodo di grado massimo/minimo abbiamo utilizzato rispettivamente un predicato che dopo aver determinato tutte le possibili stelle determina quella di dimensione maggiore/minore, e tramite il metodo `star` risaliamo al nodo in questione.
+  ```prolog
+  minimum_star(N,X) :- findall(Y, star(_, Y), L), minimum_list_in_lists(L, X), star(N, X).
+  maximum_star(N,X) :- findall(Y, star(_, Y), L), maximum_list_in_lists(L, X), star(N, X).
+  ```
 
 - [X] **Percorso tra due nodi**: un percorso è una sequenza di nodi (o archi) adiacenti che non si ripetono, per determinare il percorso tra due nodi abbiamo bisogno di costruirlo in maniera incrementale. La regola `part_of_path\4` è una relazione tra i nodi di partenza e arrivo, i nodi visitati fino a quel momento e il path complessivo. Se X non è connesso direttamente a Y allora cerco uno Z che non è membro di quelli visitati che connesso a Y o a sua volta connesso a qualcuno che è connesso a Y.
     ```prolog
@@ -158,8 +162,8 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
 - [X] **Determinare l'insieme stabile massimo**: un insieme stabile è composto da nodi che non sono adiacenti, dunque affinchè due nodi appartengano a tale insieme non devono essere connessi direttamente; per questo motivo abbiamo definito il predicato `disconnected/2` che dato un nodo verifica che questo non sia connesso con il resto della lista. La regola `subset` definisce una possibile sottolista, dunque utilizzato insieme a `setof` fornisce tutto lo spazio di ricerca per il nostro problema. Una volta determinato lo spazio di ricerca per il stable_set e ottenuto i vari risultati sotto forma di una lista di lista, cerchiamo il più grande tra queste tramite il metodo `maximum_list_in_list`. 
     ```prolog
       subset([], []).
-      subset([E|Tail], [E|NTail]):- subset(Tail, NTail).
-      subset([_|Tail], NTail):- subset(Tail, NTail).
+      subset([E|T], [E|NT]):- subset(T, NT).
+      subset([_|T], NT):- subset(T, NT).
       
       disconnected(X, [H]) :- node(X), node(H), X=\=H, not(connected(X,H)).
       disconnected(X, [H|T]) :- node(X), node(H), X=\=H, not(connected(X,H)), disconnected(X, T).
@@ -179,6 +183,51 @@ Prendiamo la lista dei nodi e creiamo un grafo discennesso tramite `disconnected
       disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
       biparted(Z) :- list_node(L), disconnected_graph(X), subtract(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
     ```
+
+### Utility
+Nella realizzazione dei predicati abbiamo implementato diverse utility function utili al fine di comprendere al meglio il funzionamento di prolog. Alcuni esempi sono:
+- `intersection\3`: trova l'intersezione tra due liste.
+```prolog
+intersection(_,[],[]).
+intersection([],_,[]).
+intersection(L1,L2,X) :- intersection_calculation(L1, L2, [], X), !.
+intersection_calculation([H|T], L2, C, X) :- member(H,L2), append(C, [H], U), intersection_calculation(T, L2, U, X).
+intersection_calculation([H|T], L2, C, X) :- \+member(H,L2), intersection_calculation(T, L2, C, X).
+intersection_calculation([H], L2, C, X) :- member(H, L2), append(C, [H], X).
+intersection_calculation([H], L2, C, C) :- \+member(H, L2).
+```
+- `subtraction\3`: rimuove dalla prima lista, tuti gli elementi della seconda lista; il terzo argomento è la lista risultante.
+```prolog
+subtraction(L1,[],L1).
+subtraction([],_,[]).
+subtraction(L1,L2,X) :- subtraction_calculation(L1, L2, [], X), !.
+subtraction_calculation([H|T], L2, C, X) :- \+member(H,L2), append(C, [H], U), subtraction_calculation(T, L2, U, X).
+subtraction_calculation([H|T], L2, C, X) :- member(H,L2), subtraction_calculation(T, L2, C, X).
+subtraction_calculation([H], L2, C, X) :- \+member(H, L2), append(C, [H], X).
+subtraction_calculation([H], L2, C, C) :- member(H, L2).
+```
+- `last\2`: determina l'ultimo elemento di una lista.
+```prolog
+last(X,[X]).
+last(X, [_|T]) :- last(X, T).
+```
+- `ordered\1`: determina se una lista è ordinata.
+```prolog
+  ordered([]).
+  ordered([H]).
+  ordered([H| [T|L] ]) :- H=<T, ordered([T|L]).  
+```
+- `same\2`: determina se la prima lista è uguale alla seconda.
+```prolog
+same([H1], [H2]) :- H1 == H2.
+same([H1|T1], [H2|T2]) :- H1==H2, same(T1, T2), !.
+```
+- `arrays_dont_intersect\1`:controlla che tutti gli elementi di tutte le liste, le quali sono elementi di una'altra lista, siano tutti differenti.
+```prolog
+arrays_dont_intersect([H]).
+arrays_dont_intersect([H|[H1|T]]) :- intersection(H,H1,X), list_lenght(X,N), N==0, arrays_dont_intersect([H|T]), arrays_dont_intersect([H1|T]).
+```
+
 
 
 ## JavaScript
@@ -253,14 +302,19 @@ Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi
 ### Screenshot
 #### Home
 Sulla sinistra è possibile visualizzare un grafo di default, sulla destra invece delle aree per inserire nodi e archi in formato JSON. Inoltre è possibile premere il pulsante "Random" per far generare a GraphLog un grafo casuale per poi passare all'analisi.
+
 ![](assets/screen/Home-Graphlog.png)
+
 #### Structure
+Sono riportati i risultati delle query principali che riguardano proprietà strutturali del grafo analizzato. Per richiamare queste ultime è stato definito un predicato, chiamato `init\0`, che esegue le query e tramite la liberia `dom` (messa a disposizione da tau-prolog) di manipolare i tag HTML della pagine per iniettare il contento al loro interno.
 
 ![](assets/screen/Structure-Graphlog.png)
 
 #### Query
 
-![](assets/
+
+
+![](assets/screen/Query-Graphlog.png)
 
 ## Contributors
 <table>
