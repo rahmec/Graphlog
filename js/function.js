@@ -221,8 +221,8 @@ function path(){
 	Swal.fire({
 		title: 'Path tra due Nodi',
 		html:
-		  '<input id="path_from" class="swal2-input" type="text" placeholder="Label della partenza">' +
-		  '<input id="path_to" class="swal2-input" placeholder="Label di arrivo">',
+		  '<input id="path_from" class="swal2-input" type="text" placeholder="ID della partenza">' +
+		  '<input id="path_to" class="swal2-input" placeholder="ID di arrivo">',
 		focusConfirm: false,
 		preConfirm: () => {
 			from = document.getElementById('path_from').value;

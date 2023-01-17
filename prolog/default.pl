@@ -21,7 +21,6 @@ init :-
     get_by_id('node_min_star', TxT8), html(TxT8, N2),
     maximum_matching(M), get_by_id('matching', TxT9), html(TxT9,M),
     minimum_vertex_cover(VC), get_by_id('vertex_cover',TxT10), html(TxT10,VC)
-
 .
 
 % ################################################
