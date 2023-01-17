@@ -2,18 +2,10 @@ use_module(library(clpfd)).
 
 node(1).
 node(2).
-node(3).
-node(4).
 
 %VERTEX_COVER
 edge(1,2).
-edge(1,3).
-edge(1,4).
-edge(1,5).
-edge(2,5).
-edge(2,6).
-edge(3,4).
-edge(4,5).
+
 
 %BIPARTITO
 %edge(1,2).
@@ -38,7 +30,11 @@ star_list(S) :- list_node(L), setof(Y, connected(_,Y), S).
 star(X,L) :- setof(Y, connected(X,Y), L).
 degree(X, N) :- star(X,L), list_lenght(L,N). 
 % voglio trovare le stelle di tutti i nodi e poi trovo la minore tra queste 
-min_star(N) :- setof(L, star(X,L), S), minimum_list_in_lists(S,N).
+
+star(X,L) :- setof(Y, connected(X,Y), L).
+degree(X, N) :- star(X,L), list_lenght(L,N). 
+minimum_star(N,X) :- findall(Y, star(_, Y), L), minimum_list_in_lists(L, X), star(N, X).
+maximum_star(N,X) :- findall(Y, star(_, Y), L), maximum_list_in_lists(L, X), star(N, X).
 
 last(X,[X]).
 last(X, [_|T]) :- last(X, T).

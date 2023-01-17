@@ -134,6 +134,9 @@ function submit(txt_nodes, txt_edges){
 		},
   		error: function (err) { console.log(err) },
 	});
+	session.query('minimum_star(X).');
+	session.answer((a) => {
+		console.log(session.format_answer(a))})
 }
 
 function parse_json_edges(str){
@@ -232,7 +235,6 @@ function path(){
 		path_query = "shortest_path(%FROM%, %TO%, P).".replace("%FROM%", from).replace("%TO%", to);
 		session.query(path_query);
 		session.answer((a) => {
-			console.log(session.format_answer(a))
 			if(session.format_answer(a) == 'false'){ 
 				document.getElementById('min_path').innerHTML = 'Nessun cammino';
 				return false;
@@ -247,18 +249,33 @@ function tree(){
 	tree_query = 'list_node(L), tree(L).';
 	session.query(tree_query);
 		session.answer((a) => {
-			console.log(session.format_answer(a))
 			document.getElementById('tree').innerHTML = session.format_answer(a);
 		}) 
 
 }
 
 function eulerian(){
-
+	eulerian_query = "list_node(L), eulerian(L).";
+	session.query(eulerian_query);
+	session.answer((a) => {
+		document.getElementById('eulerian').innerHTML = session.format_answer(a);
+	}) 
 }
 
 function hamiltonian(){
+	hamilton_query = "list_node(L), hamiltonian(L,P).";
+	session.query(hamilton_query);
+	session.answer((a) => {
+		document.getElementById('hamiltonian').innerHTML = session.format_answer(a);
+	}) 
+}
 
+function biparted(){
+	biparted_query = "biparted(Z).";
+	session.query(biparted_query);
+	session.answer((a) => {
+		document.getElementById('biparted').innerHTML = session.format_answer(a);
+	}) 
 }
 
 function puri(answer){
@@ -385,10 +402,8 @@ function init(){
     session.answer((a) => {console.log(pl.format_answer(a))})
 
     var n_edges = data.edges.length;
-    console.log(n_edges)
     var n_nodes = data.nodes.length;
-    console.log(n_nodes)
+
     density =  n_edges / binomial(n_nodes,2);
-    console.log(density);
     document.getElementById('result_density').innerHTML = density.toFixed(2);
 }

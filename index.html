@@ -19,16 +19,30 @@
 </head>
 
 <body>
+	<nav class="navbar" data-bs-theme="dark" style="color:#98c1d9;background-color:#3d5a80;">
+		<div class="container-fluid">
+			<i class="fa-solid fa-dragon"> &nbsp; Alchemists</i>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</nav>
+	<div class="d-flex center-block m-3">
+		<img src="assets/img/logo-trasnparent.png" class=" my-auto" width="150px">
+		<h1 align="center" class="m-3 my-auto title d-inline"><span style="color:#54B8D0">Graph</span><i style="color:#D6E1F2">Log</i></h1>
+	</div>
+	  
+
 	<div class="container-fluid mx-2">
-		<h1 align="center" class="m-3 mb-5 pb-5 title">Graphlog</h1>
 		<div class="row d-flex">
 			<div class="col-xl-6">
-				<h4 align="center">Graph Visualization</h4>
+				<h4 align="center" style="font-weight: 600;">Graph Visualization</h4>
+				<p style="text-align: center;">The visualization of the graph with Vis.js</p>
 				<div id="mynetwork" class="center-block my-5"></div>
 			</div>
 			<div class="col-xl-6 pr-5" id="action">
-				<h5>Action</h5>
-				Specify nodes and edges in the json notation
+				<h5 style="font-weight: 600;" align="center">Action</h5>
+				<p style="text-align: center;">Specify edges and nodes in JSON notation</p>
 				<div class="row">
 					<!-- Action for nodes -->
 					<div class="col-6">
@@ -39,7 +53,7 @@
 								name="nodes" 
 								id="nodes" 
 								rows="10"
-								placeholder="[ &#10; { id: 1, label: 'Node 1' }, &#10; { id: 2, label: 'Node 2' }, &#10; { id: 3, label: 'Node 3' }, &#10; { id: 4, label: 'Node 4' }&#10;]"
+								placeholder='[ &#10; { "id": 1, "label": "Node 1" }, &#10; { "id": 2, "label": "Node 2" }, &#10; { "id": 3, "label": "Node 3" }, &#10; { "id": 4, "label": "Node 4" }&#10;]'
 							></textarea>
 						</div>
 					</div>
@@ -52,7 +66,7 @@
 								name="edges" 
 								id="edges" 
 								rows="10"
-								placeholder="[ &#10; { from: 1, to: 3 }, &#10; { from: 1, to: 2 }, &#10; { from: 2, to: 4 }, &#10; { from: 2, to: 3 }, &#10;]"
+								placeholder='[ &#10; { "from": 1, "to": 3 }, &#10; { "from": 1, "to": 2 }, &#10; { "from": 2, "to": 4 }, &#10; { "from": 2, "to": 3 }, &#10;]'
 							></textarea>
 						</div>
 					</div>
@@ -146,7 +160,6 @@
 						<div class="alert alert-info d-flex" role="alert">
 							<p class="my-auto">Minima Copertura con Nodi:</p>
 							<span id="vertex_cover" class="ml-auto mr-3 mt-auto"></span>
-							<button class="btn btn-success"><i class="fa-solid fa-eye"></i></button>
 						</div>
 					</div>
 					<!-- 
@@ -172,7 +185,7 @@
 					  		></span>
 							<button 
 								class="btn btn-primary"
-								onclick="eluerian()"
+								onclick="eulerian()"
 							>
 								<i class="fa-solid fa-person-walking-arrow-loop-left"></i>
 								Check
@@ -180,12 +193,12 @@
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
 							<p class="my-auto">Ammette ciclo Hamiltoniano?</p>
-							<span id="hamiltoninan" 
+							<span id="hamiltonian" 
 								  class="ml-auto mr-3 mt-auto"
 							></span>
 							<button 
 								class="btn btn-primary"
-								onclick="hamiltionian()"
+								onclick="hamiltonian()"
 							>
 								<i class="fa-solid fa-bicycle"></i>
 								Check
@@ -201,19 +214,21 @@
 						</div>
 						<div class="alert alert-info d-flex" role="alert">
 							<p class="my-auto">Bipartito?</p>
-							<span id="hamiltoninan" 
+							<span id="biparted" 
 								  class="ml-auto mr-3 mt-auto"
 							></span>
 							<button 
 								class="btn btn-primary"
-								onclick="bipartited()"
+								onclick="biparted()"
 							>
 								<i class="fa-solid fa-pause"></i>
 								Check
 							</button>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+						Some space for future implementations. Plus "Other" look like "Otter". Otters are cute.	
+					</div>
 				  </div>
 			</div>
 		</div>

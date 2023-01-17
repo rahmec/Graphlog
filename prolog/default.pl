@@ -93,7 +93,7 @@ eulerian([H]) :- degree(H, N), even(N).
 eulerian([H|T]) :- connected_graph([H|T]), degree(H, N), even(N), eulerian(T), !.
 
 hamiltonian([H|T], P) :- check_hamiltonian_cycles(H, T, P).
-check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), list_lenght(P, N), last(Z, P), connected(Z,X), append(P, [X], Y), !.
+check_hamiltonian_cycles(X, [H|T], Y) :- path(X,H,P), n_nodes(N), N=\=2,list_lenght(P, N), last(Z, P), connected(Z,X), append(P, [X], Y), !.
 check_hamiltonian_cycles(X, [H|T], P) :- check_hamiltonian_cycles(X, T, P). 
 
 tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
@@ -111,6 +111,7 @@ maximum_stable_set(X) :- setof(Z, stable_set(Z), S), maximum_list_in_lists(S, X)
 stable_set_of_cardinality(X, C) :- stable_set(X), list_lenght(X, Z), Z==C, !.
 
 maximum_length([H|T], X) :- list_lenght(H, N), maximum_length_calculation(T, N, Y), X is max(N,Y).
+maximum_length([H], X) :- list_lenght(H, X).
 maximum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is max(U,N), maximum_length_calculation(T, Z, X).
 maximum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is max(U,N).
 maximum_list_in_lists(L, X) :- maximum_length(L, N), member(X,L), list_lenght(X,M), N==M, !.
@@ -139,6 +140,7 @@ disconnected_graph([H]) :- node(H).
 disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
 biparted(Z) :- list_node(L), disconnected_graph(X), subtraction(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
 
+minimum_length([H], X) :- list_lenght(H, X).
 minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
 minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
 minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is min(U,N).
@@ -151,6 +153,7 @@ minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S
 
 edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).
 covered_nodes(E, N) :- elements_union(E, X), sort(X, N).
+elements_union([H], H).
 elements_union([H|T], X) :- elements_union_steps(T, H, X).
 elements_union_steps([H], U, X) :- append(H, U, X).
 elements_union_steps([H|T], U, X) :- append(H, U, Z), elements_union_steps(T, Z, X).
