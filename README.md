@@ -138,6 +138,41 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
       minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
     ```
+- [X] **Determinare coperture con archi**:
+    ```prolog
+      edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).
+      covered_nodes(E, N) :- elements_union(E, X), sort(X, N).
+      elements_union([H|T], X) :- elements_union_steps(T, H, X).
+      elements_union_steps([H], U, X) :- append(H, U, X).
+      elements_union_steps([H|T], U, X) :- append(H, U, Z), elements_union_steps(T, Z, X).
+      minimum_edge_cover(E) :- setof(X, edge_cover(X), S), minimum_list_in_lists(S, E).
+    ```
+- [X] **Determinare l'abbinamento massimo**:
+    ```prolog
+      matching(E) :- setof(X, edge_array(X), S), subset(S, E), arrays_dont_intersect(E).
+      edges_subset(E) :- setof(X, edge_array(X), S), subset(S, E).
+      arrays_dont_intersect([H]).
+      arrays_dont_intersect([H|[H1|T]]) :- intersection(H,H1,X), list_lenght(X,N), N==0, arrays_dont_intersect([H|T]), arrays_dont_intersect([H1|T]).
+      maximum_matching(M) :- setof(X, matching(X), S), maximum_list_in_lists(S,M).
+    ```
+- [X] **Determinare l'insieme stabile massimo**: 
+    ```prolog
+      stable_set([]).
+      stable_set([H]) :- node(H).
+      stable_set([H|T]) :- list_node(X), subset(X,[H|T]), disconnected(H, T), stable_set(T).
+      stable_set([H|T]) :- list_node([H|T]), disconnected(H, T), !.
+      
+      maximum_stable_set(X) :- setof(Z, stable_set(Z), S), maximum_list_in_lists(S, X), !.
+      stable_set_of_cardinality(X, C) :- stable_set(X), list_lenght(X, Z), Z==C, !.
+    ```
+- [X] **Determinare se il grafo è bipartito**: 
+    ```prolog
+      disconnected_graph([H]) :- node(H).
+      disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
+      biparted(Z) :- list_node(L), disconnected_graph(X), subtract(L,X,Y), disconnected_graph(Y), Z=[X,Y], !.
+    ```
+
+
 ## JavaScript
 L'interprete prolog per js mette a disposizione delle regole per manipolare il DOM, abbiamo utilizzato queste regole per far visualizzare i risultati delle query sulla pagina web.
 Un esempio è il seguente metodo `init\0` che dopo aver risolto i fatti da noi definiti aggiunge il risultato direttamente all'interno del DOM:
