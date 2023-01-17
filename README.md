@@ -138,7 +138,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
       minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
     ```
-- [X] **Determinare coperture con archi**:
+- [X] **Determinare coperture con archi**: si tratta di un insieme di archi che tocca tutti i nodi del grafo; abbiamo pensato di costruire due liste di nodi composte rispettivamente dai nodi da cui partono gli archi e una dai nodi in cui arrivano gli archi. Se l'unione di queste due liste compone l'intero insieme dei nodi abbiamo trovato una copertura (le confrontiamo tramite il predicato `same`), il predicato `edge_array` crea una lista degli archi che formano una copertura. Per trovare quello minimo ci basta prendere il set composto da tutte le possibili liste di archi che formano una copertura e prendere quella di lunghezza minima.
     ```prolog
       edge_cover(X) :- setof(Y, edge_array(Y), E), subset(E,X), covered_nodes(X, N), list_node(L), same(L,N).
       covered_nodes(E, N) :- elements_union(E, X), sort(X, N).
@@ -147,7 +147,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       elements_union_steps([H|T], U, X) :- append(H, U, Z), elements_union_steps(T, Z, X).
       minimum_edge_cover(E) :- setof(X, edge_cover(X), S), minimum_list_in_lists(S, E).
     ```
-- [X] **Determinare l'abbinamento massimo**:
+- [X] **Determinare gli abbinamenti**: è un insieme di archi non adiacenti; se un arco fa parte dell'insieme allora tutti gli altri nodi che partono dal primo o dal secondo nodo non possono farne parte. Per esprimere questa proprietà utilizziamo il predicato `array_dont_intersect` tramite il quale teniamo conto dei nodi non ancora toccati e dunque degli archi che sono rimasti a disposizione, una volta che tutti i nodi sono stati toccati abbiamo trovato un abbinamento. Andando a prendere il set di tutti i possibili abbinamenti e cercando quello di lunghezza massima troviamo l'abbinamento massimo.
     ```prolog
       matching(E) :- setof(X, edge_array(X), S), subset(S, E), arrays_dont_intersect(E).
       edges_subset(E) :- setof(X, edge_array(X), S), subset(S, E).
