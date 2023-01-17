@@ -126,6 +126,18 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
     ```prolog
       tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
+- [X] **Determinare coperture con nodi**: 
+    ```prolog
+      minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
+      minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
+      minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), X is min(U,N).
+      minimum_list_in_lists(L, X) :- minimum_length(L, N), member(X,L), list_lenght(X,M), N==M, !.
+
+      vertex_cover(X) :- list_node(L), subset(L, X), setof(Y, edge_array(Y), E), edge_covered_by_nodes(X,E).
+      edge_covered_by_nodes(X, [H]) :- subtract(H,X,S), list_lenght(S,N), N=<1.
+      edge_covered_by_nodes(X, [H|T]) :- subtract(H,X,S), list_lenght(S,N), N=<1, edge_covered_by_nodes(X, T).
+      minimum_vertex_cover(V) :- setof(X, vertex_cover(X), S), minimum_list_in_lists(S, V).
+    ```
 ## JavaScript
 L'interprete prolog per js mette a disposizione delle regole per manipolare il DOM, abbiamo utilizzato queste regole per far visualizzare i risultati delle query sulla pagina web.
 Un esempio è il seguente metodo `init\0` che dopo aver risolto i fatti da noi definiti aggiunge il risultato direttamente all'interno del DOM:
