@@ -147,10 +147,8 @@ var options = {
 			}).then((result) => {
 				nodeData.label = document.getElementById('node_label').value;
 				nodeData.id = document.getElementById('node_id').value;
-				console.log(nodeData)
 				callback(nodeData);
 				add_node_to_kb(nodeData);
-				console.log(pl_kb_nodes_string);
 
 			})
 		},
@@ -186,7 +184,6 @@ var options = {
 			*/
 			callback(edgeData);
 			add_edge_to_kb(edgeData);
-			console.log(pl_kb_edges_string);
 
 
 		},
@@ -240,11 +237,13 @@ function submit(txt_nodes, txt_edges){
 	session.answer((a) => {console.log(pl.format_answer(a))})
 
 	var n_edges = data.edges.length;
-	console.log(n_edges)
 	var n_nodes = data.nodes.length;
-	console.log(n_nodes)
 	density =  n_edges / binomial(n_nodes,2);
-	console.log(density);
+
+	session.query('minimum_vertex_cover(VC).');
+	session.answer((a) => {console.log(pl.format_answer(a))})
+
+
 	document.getElementById('result_density').innerHTML = density.toFixed(2);
 }
 
@@ -370,7 +369,7 @@ function eulerian(){
 }
 
 function hamiltonian(){
-	
+
 }
 
 function puri(answer){
