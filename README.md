@@ -126,7 +126,7 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
     ```prolog
       tree([H|T]) :-  n_nodes(N), n_edges(Z), Y is N-1, Z==Y, connected_graph([H|T]).
     ```
-- [X] **Determinare coperture con nodi**: 
+- [X] **Determinare coperture con nodi**: si tratta di un insieme di nodi che toccano tutti gli archi del grafo. Quello che facciamo e prendere un sottoinsieme di nodi e vedere quali archi copre, lo facciamo tramite il predicato `edge_covered_by_nodes`, a cui passiamo tutti i possibili sottoinsieme di archi e il sottoinsieme di nodi. Andando a ricercare la lista di nodi più piccola che lo soddisfa abbiamo trovato la minima copertura con nodi 
     ```prolog
       minimum_length([H|T], X) :- list_lenght(H, N), minimum_length_calculation(T, N, Y), X is min(N,Y).
       minimum_length_calculation([H|T], U, X) :- list_lenght(H, N), Z is min(U,N), minimum_length_calculation(T, Z, X).
@@ -172,7 +172,8 @@ Abbiamo deciso di mettere prima la condizione sui nodi ed archi poichè si riesc
       maximum_stable_set(X) :- setof(Z, stable_set(Z), S), maximum_list_in_lists(S, X), !.
       stable_set_of_cardinality(X, C) :- stable_set(X), list_lenght(X, Z), Z==C, !.
     ```
-- [X] **Determinare se il grafo è bipartito**: 
+- [X] **Determinare se il grafo è bipartito**: un grafo bipartito se posso dividerlo in due insieme di nodi, in cui tutti i nodi dell'insieme sono tra loto disconessi. Procediamo con il prendere tutti i sottoinsiemi di nodi e li controllo uno ad uno per verificare se esiste un sottoinsieme in cui quei nodi sono disconnessi e in cui anche il complementare dell'insieme selezionato lo sia. Se esistono questi due insiemi il grafo è bipartito.
+Prendiamo la lista dei nodi e creiamo un grafo discennesso tramite `disconnected_graph`, tramite `subtract` vediamo otteniamo l'insisme di nodi complementare; se anche questi generano un grafo disconnesso allora abbiamo trovato i due insiemi.
     ```prolog
       disconnected_graph([H]) :- node(H).
       disconnected_graph([H|T]) :- list_node(L), subset(L, [H|T]), disconnected(H, T), disconnected_graph(T).
