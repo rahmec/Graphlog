@@ -251,8 +251,16 @@ Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi
 - eseguire delle tipiche query su delle proprietà che il grafico può avere, che tuttavia risultano molto dispendiose da effetturare, in termini di tempo, manualmente.
 
 ### Screenshot
+#### Home
+Sulla sinistra è possibile visualizzare un grafo di default, sulla destra invece delle aree per inserire nodi e archi in formato JSON. Inoltre è possibile premere il pulsante "Random" per far generare a GraphLog un grafo casuale per poi passare all'analisi.
 ![](assets/screen/Home-Graphlog.png)
+#### Structure
 
+![](assets/screen/Structure-Graphlog.png)
+
+#### Query
+
+![](assets/
 
 ## Contributors
 <table>
