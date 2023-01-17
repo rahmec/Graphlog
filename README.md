@@ -312,7 +312,8 @@ Sono riportati i risultati delle query principali che riguardano proprietà stru
 
 #### Query
 
-
+Nella schermata Query è possibile interrogare l'interprete prolog riguardo a caratteristiche dei grafi molto utili nel caso in cui si stiano modellando dei problemi reali mediante tali strutture. Selezionando il tasto per il cammino minimo si apre un pop-up che permette di inserire ID del nodo di partenza e di arrivo, il submit innesca la query il cui risultato è visualizzabile a schermo.
+Le altre query allo stato attuale ritornano solamente risposta true o false, sono state previste funzionalità che permettono di visualizzare graficamente i risultati.
 
 ![](assets/screen/Query-Graphlog.png)
 
