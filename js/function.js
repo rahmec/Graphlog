@@ -361,12 +361,14 @@ function binomial(n, k) {
 }
 
 function randomGraph(){
-    random_node_number = Math.floor(Math.random() * 6)+4;
+    cleanGraph();
+    random_node_number = Math.floor(Math.random() * 5)+3;
     json_nodes = [];
     json_edges = [];
     added_edges = [];
     for(let i=1; i<=random_node_number; i++){
 	json_nodes.push({id: i, label: 'Node '+i, shape: "dot"});
+	pl_kb_nodes_string += replace_node_string(i);
 	random_edges_number = Math.floor(Math.random() * 2)+1;
 	for(let j=0; j<random_edges_number; j++){
 	    random_node = Math.floor(Math.random() * random_node_number)+1;
@@ -381,6 +383,7 @@ function randomGraph(){
 		}
 	    }
 	    if(flag){
+		pl_kb_nodes_string += replace_edge_string({from: i, to: random_node});
 		json_edges.push({from: i, to: random_node});
 		added_edges.push([i,random_node]);
 	    }
@@ -391,7 +394,16 @@ function randomGraph(){
     data.nodes = nodes;
     data.edges = edges;
     network = new vis.Network(container, data, options);
-    init();
+    kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
+    session.consult("prolog/default.pl", {
+	    success: function () { 
+		    console.log('Went well');
+		    session.consult(kb,{
+			    success: function(){init();}
+		    })
+	    },
+	    error: function (err) { console.log(err) },
+    });
 }
 
 function init(){
