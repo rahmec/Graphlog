@@ -135,6 +135,7 @@ Prevediamo l'aggiunta delle seguenti funzionalità, già parzialmente implementa
 + Analisi di grafi pesati
 + Visualizzazione dei risultati delle query sul grafo
 + Animazione esecuzione query
++ Ottimizzazione delle query
 
 # Ringraziamenti
 
