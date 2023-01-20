@@ -362,7 +362,7 @@ function binomial(n, k) {
 
 function randomGraph(){
     cleanGraph();
-    random_node_number = Math.floor(Math.random() * 3)+4;
+    random_node_number = Math.floor(Math.random() * 8)+4;
     json_nodes = [];
     json_edges = [];
     added_edges = [];
@@ -394,7 +394,6 @@ function randomGraph(){
     data.nodes = nodes;
     data.edges = edges;
     network = new vis.Network(container, data, options);
-    t
     kb = pl_kb_nodes_string + "\n" + pl_kb_edges_string;
     session.consult("prolog/default.pl", {
 	    success: function () { 
