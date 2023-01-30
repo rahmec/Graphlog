@@ -35,7 +35,12 @@ Le altre query allo stato attuale ritornano solamente risposta true o false, son
 Per installare il progetto in locale eseguire i seguenti step:
 
 1. Clonare la repository in locale o scaricando lo zip del sorgente o tramite terminale con il seguente comando
-``` git clone ```
+```
+git clone https://github.com/OT-Rax/Graphlog.git
+```
+2. Eseguire un web server tramite XAMPP o simili
+3. Spostare la cartella `Graphlog` all'interno della document root del web server
+4. Aprire il browser e cercare `localhost`
 
 ## Ambiente di Lavoro
 Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente.
