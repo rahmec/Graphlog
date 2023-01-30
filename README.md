@@ -11,6 +11,32 @@ Progetto universitario per la realizzazione di un agente che consenta di eseguir
 
 L'obiettivo principale è quello di realizzare un applicativo che consenta di realizzare in maniera intuitiva e semplice analisi su grafi e di riportare i principali modelli di programmazione matematica in un linguaggio dichiarativo come prolog.
 
+
+### Screenshot
+#### Home
+Sulla sinistra è possibile visualizzare un grafo di default, sulla destra invece delle aree per inserire nodi e archi in formato JSON. Inoltre è possibile premere il pulsante "Random" per far generare a GraphLog un grafo casuale per poi passare all'analisi.
+
+![](assets/screen/Home-Graphlog.png)
+
+#### Structure
+Sono riportati i risultati delle query principali che riguardano proprietà strutturali del grafo analizzato. Per richiamare queste ultime è stato definito un predicato, chiamato `init\0`, che esegue le query e tramite la liberia `dom` (messa a disposizione da tau-prolog) di manipolare i tag HTML della pagine per iniettare il contento al loro interno.
+
+![](assets/screen/Structure-Graphlog.png)
+
+#### Query
+
+Nella schermata Query è possibile interrogare l'interprete prolog riguardo a caratteristiche dei grafi molto utili nel caso in cui si stiano modellando dei problemi reali mediante tali strutture. Selezionando il tasto per il cammino minimo si apre un pop-up che permette di inserire ID del nodo di partenza e di arrivo, il submit innesca la query il cui risultato è visualizzabile a schermo.
+Le altre query allo stato attuale ritornano solamente risposta true o false, sono state previste funzionalità che permettono di visualizzare graficamente i risultati.
+
+![](assets/screen/Query-Graphlog.png)
+
+## Utilizzo e Installazione
+
+Per installare il progetto in locale eseguire i seguenti step:
+
+1. Clonare la repository in locale o scaricando lo zip del sorgente o tramite terminale con il seguente comando
+``` git clone ```
+
 ## Ambiente di Lavoro
 Specifichiamo l'ambiente, e le sue caratteristiche, in cui dovrà operare l'agente.
 | **Agent Type**  | **Performance Measure** |  **Enviroment** | **Actuators**  |  **Sensors** |
@@ -298,24 +324,6 @@ Per l'illustrazione del funzionamento di GraphLog utilizziamo il seguente esempi
 Una volta eseguito l'upload degli archi e dei nodi attraverso gli appositi campi comparirà un piccolo menù che consente all'utente di:
 - visualizzare informazioni riguardanti la struttura del grafo
 - eseguire delle tipiche query su delle proprietà che il grafico può avere, che tuttavia risultano molto dispendiose da effetturare, in termini di tempo, manualmente.
-
-### Screenshot
-#### Home
-Sulla sinistra è possibile visualizzare un grafo di default, sulla destra invece delle aree per inserire nodi e archi in formato JSON. Inoltre è possibile premere il pulsante "Random" per far generare a GraphLog un grafo casuale per poi passare all'analisi.
-
-![](assets/screen/Home-Graphlog.png)
-
-#### Structure
-Sono riportati i risultati delle query principali che riguardano proprietà strutturali del grafo analizzato. Per richiamare queste ultime è stato definito un predicato, chiamato `init\0`, che esegue le query e tramite la liberia `dom` (messa a disposizione da tau-prolog) di manipolare i tag HTML della pagine per iniettare il contento al loro interno.
-
-![](assets/screen/Structure-Graphlog.png)
-
-#### Query
-
-Nella schermata Query è possibile interrogare l'interprete prolog riguardo a caratteristiche dei grafi molto utili nel caso in cui si stiano modellando dei problemi reali mediante tali strutture. Selezionando il tasto per il cammino minimo si apre un pop-up che permette di inserire ID del nodo di partenza e di arrivo, il submit innesca la query il cui risultato è visualizzabile a schermo.
-Le altre query allo stato attuale ritornano solamente risposta true o false, sono state previste funzionalità che permettono di visualizzare graficamente i risultati.
-
-![](assets/screen/Query-Graphlog.png)
 
 ## Contributors
 <table>
